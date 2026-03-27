@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heia - TravelGenious Advisor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13", // Coral Accent
+                        "navy-custom": "#1e293b", // Professional Navy
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-2xl mx-auto shadow-2xl bg-white dark:bg-background-dark">
+<!-- TopAppBar -->
+<header class="flex items-center bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 p-4 shrink-0 justify-between z-10">
+<div class="text-slate-600 dark:text-slate-300 flex size-10 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="size-9 rounded-full bg-navy-custom flex items-center justify-center overflow-hidden mb-0.5">
+<img alt="Heia" class="object-cover w-full h-full" data-alt="Profile picture of AI assistant Heia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjKUxfFvSMwLdZJi0pAFGiBGSQrqRD3EdThx7btlBjGbzTaIwFmQQ0lKGL35i3sGydA-OiUmonAjDfUH95LD_RrgRA2BLmF6lQ6lCzpWOYmgOIdqBt1tT1HPOaLg_vj0nCwdQeLx9NfBGALku9PtaySrMxPdYyVgczch_U10Q5flV2PfeYOWNjm7n-ubH10cgX4nymjQSbzlnkT26p8Nq00UzMGcpmsbo-C4irqqlXlW5dHvbabb2AThgn-WLl9p_v1NUF4k_8TjE"/>
+</div>
+<h2 class="text-navy-custom dark:text-white text-sm font-bold leading-tight tracking-tight">Heia - TravelGenious Advisor</h2>
+</div>
+<div class="flex size-10 items-center justify-end">
+<button class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">restart_alt</span>
+</button>
+</div>
+</header>
+<!-- Chat History Area -->
+<main class="flex-1 overflow-y-auto p-4 space-y-6 scroll-smooth">
+<!-- Heia Message -->
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-navy-custom flex-shrink-0 mt-1 overflow-hidden">
+<img alt="Heia Avatar" class="object-cover w-full h-full" data-alt="Avatar icon for Heia AI" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK83I2VA0Sm5zb8MSvZPNPM1R7YQ_TZ2W7ecmS-e_Ul7bPt6h2vZJEUfd-dXRwfXMdfO2mrrb2OB1r3WFvytfHGue9brQvaosL3jiwW34YmRiyLIksrSIC8dGBJhiIhnjPkVgnuqKCBOExS6xTrEPp0CcjihAtESYEa5TYFkohhnC_5tOAjA4SUI0edYXWf8i8jGU7e-crnjk74MYrKTXtygnTBSXAF0nMsgZAsZjAo_Z6eLklHeUtUXzvAbbvw8VQdgtzp7kq4Zw"/>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-semibold ml-1">Heia</p>
+<div class="bg-navy-custom text-white rounded-xl rounded-tl-none px-4 py-3 shadow-sm">
+<p class="text-sm leading-relaxed">
+                            Hi! I'm Heia. Tell me a bit about what you're looking for—are you craving a relaxing beach vibe, an adventurous mountain trek, or a cultural city tour?
+                        </p>
+</div>
+</div>
+</div>
+<!-- Suggestion Chips -->
+<div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar ml-11">
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 hover:bg-slate-50 transition-colors">
+<p class="text-slate-700 dark:text-slate-200 text-xs font-medium">Beach getaway</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 hover:bg-slate-50 transition-colors">
+<p class="text-slate-700 dark:text-slate-200 text-xs font-medium">Budget-friendly</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 hover:bg-slate-50 transition-colors">
+<p class="text-slate-700 dark:text-slate-200 text-xs font-medium">Family trip</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 hover:bg-slate-50 transition-colors">
+<p class="text-slate-700 dark:text-slate-200 text-xs font-medium">Surprise me!</p>
+</button>
+</div>
+<!-- Recommendation Card -->
+<div class="ml-11 @container">
+<div class="flex flex-col overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm transition-transform hover:scale-[1.01]">
+<div class="relative w-full aspect-video">
+<img alt="Bali" class="w-full h-full object-cover" data-alt="Beautiful tropical beach scenery in Bali Indonesia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDFoYc541JvZwQiIVTqjjeeuSAWMkXPNOJ2-6X3xJLyOGWyb2o5G7p8SQVv8nGLGF8OjBzHkJLbuVbSfCwDK9f2Z-uqVbOTcq1_Ki-2U5Gyvfnt_GL8QVhHpxTvKelTjKUHCFuqdNp6SnblhBlBGh_IdHLPFAsN-B9hJtW_hWZcOQ-zJ1k-P9RUB8QnTqiPNQPX8lK1Ir5_Z8I2piUb2UxWaQiv2d4PB4Um5hKgVy5rS4SkR3qS0JgX8vf6-aDgrgiExmDPT9WJGE"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider text-navy-custom">Top Pick</div>
+</div>
+<div class="flex flex-col p-4 gap-3">
+<div>
+<p class="text-navy-custom dark:text-white text-lg font-bold">Bali, Indonesia</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Experience a tropical paradise with lush landscapes, ancient temples, and vibrant coastal culture.</p>
+</div>
+<div class="flex items-center justify-between gap-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Est. Budget</span>
+<p class="text-navy-custom dark:text-primary text-sm font-semibold">$1,200 - $2,500</p>
+</div>
+<button class="flex items-center justify-center rounded-lg bg-primary px-4 h-9 text-white text-xs font-bold transition-all hover:bg-primary/90 active:scale-95 whitespace-nowrap">
+                                View Flight &amp; Options
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Input Field -->
+<footer class="p-4 bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 max-w-3xl mx-auto">
+<div class="flex-1 relative flex items-center">
+<input class="w-full h-12 bg-slate-100 dark:bg-slate-800 border-none rounded-xl px-4 pr-12 text-sm focus:ring-2 focus:ring-primary/50 placeholder:text-slate-400 dark:text-slate-100" placeholder="Message Heia..." type="text"/>
+<button class="absolute right-3 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+</div>
+<button class="size-12 rounded-xl bg-navy-custom text-white flex items-center justify-center hover:bg-slate-800 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<p class="text-center text-[10px] text-slate-400 mt-2">AI can make mistakes. Verify travel details before booking.</p>
+</footer>
+</div>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

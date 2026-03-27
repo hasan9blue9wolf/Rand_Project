@@ -1,0 +1,76 @@
+{
+  "cli": {
+    "version": ">= 16.15.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "environment": "development",
+      "channel": "development",
+      "env": {
+        "APP_VARIANT": "development",
+        "APP_ENV": "development",
+        "EXPO_PUBLIC_APP_MODE": "demo",
+        "EXPO_PUBLIC_HEIA_PROVIDER": "mock"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "environment": "preview",
+      "channel": "preview",
+      "env": {
+        "APP_VARIANT": "staging",
+        "APP_ENV": "staging",
+        "EXPO_PUBLIC_APP_MODE": "live",
+        "EXPO_PUBLIC_HEIA_PROVIDER": "real"
+      }
+    },
+    "staging": {
+      "distribution": "internal",
+      "autoIncrement": true,
+      "environment": "preview",
+      "channel": "staging",
+      "env": {
+        "APP_VARIANT": "staging",
+        "APP_ENV": "staging",
+        "EXPO_PUBLIC_APP_MODE": "live",
+        "EXPO_PUBLIC_HEIA_PROVIDER": "real"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "environment": "production",
+      "channel": "production",
+      "env": {
+        "APP_VARIANT": "production",
+        "APP_ENV": "production",
+        "EXPO_PUBLIC_APP_MODE": "live",
+        "EXPO_PUBLIC_HEIA_PROVIDER": "real"
+      }
+    },
+    "investor-apk": {
+      "distribution": "internal",
+      "environment": "preview",
+      "channel": "investor-demo",
+      "env": {
+        "APP_VARIANT": "production",
+        "APP_ENV": "production",
+        "APP_VERSION": "1.0.0",
+        "ANDROID_VERSION_CODE": "1",
+        "EXPO_PUBLIC_APP_MODE": "demo",
+        "EXPO_PUBLIC_HEIA_PROVIDER": "mock",
+        "EXPO_PUBLIC_SUPABASE_URL": "https://localhost",
+        "EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY": "server_key_placeholder_for_investor_demo"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    }
+  },
+  "submit": {
+    "staging": {},
+    "production": {}
+  }
+}

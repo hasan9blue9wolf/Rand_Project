@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="2868" viewBox="0 0 1320 2868" fill="none">
+  <rect width="1320" height="2868" fill="#071528"/>
+  <rect x="96" y="96" width="1128" height="2676" rx="92" fill="#0E2038" stroke="#2F8FFF" stroke-width="8"/>
+  <circle cx="660" cy="760" r="210" fill="#0F49BD" opacity="0.18"/>
+  <path d="M400 1500L660 980L920 1500" stroke="#2F8FFF" stroke-width="150" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M455 1490L660 1080L865 1490" stroke="#C9E4FF" stroke-width="88" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="660" y="360" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="76" font-weight="700" text-anchor="middle">Replace With Final iPhone Screenshot</text>
+  <text x="660" y="452" fill="#9FCBFF" font-family="Arial, sans-serif" font-size="38" text-anchor="middle">1320 x 2868 • Apple 6.9-inch portrait canvas</text>
+  <rect x="210" y="1830" width="900" height="560" rx="40" fill="#112844" stroke="#244E85" stroke-width="4" stroke-dasharray="18 18"/>
+  <text x="660" y="2038" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle">Hero flow</text>
+  <text x="660" y="2120" fill="#C9E4FF" font-family="Arial, sans-serif" font-size="34" text-anchor="middle">Use real UI capture, no device frame, minimal overlay text.</text>
+  <text x="660" y="2220" fill="#C9E4FF" font-family="Arial, sans-serif" font-size="34" text-anchor="middle">Keep the first three screenshots product-led and easy to scan.</text>
+</svg>

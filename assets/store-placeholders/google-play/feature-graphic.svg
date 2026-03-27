@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500" fill="none">
+  <rect width="1024" height="500" fill="#071528"/>
+  <circle cx="794" cy="88" r="164" fill="#0F49BD" opacity="0.15"/>
+  <circle cx="188" cy="420" r="150" fill="#0F49BD" opacity="0.12"/>
+  <path d="M232 390L372 140L512 390" stroke="#2F8FFF" stroke-width="84" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M262 384L372 188L482 384" stroke="#C9E4FF" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="610" y="188" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="54" font-weight="700">Google Play Feature Graphic</text>
+  <text x="610" y="250" fill="#9FCBFF" font-family="Arial, sans-serif" font-size="28">1024 x 500 placeholder for marketing handoff</text>
+  <text x="610" y="320" fill="#C9E4FF" font-family="Arial, sans-serif" font-size="26">Use product-led imagery, minimal text, and brand-consistent color.</text>
+</svg>
