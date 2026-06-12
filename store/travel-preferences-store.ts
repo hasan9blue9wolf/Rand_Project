@@ -33,7 +33,7 @@ export const useTravelPreferencesStore = create<TravelPreferencesState>()(
         }),
     }),
     {
-      name: "travelgenious-travel-preferences",
+      name: "hayatrip-travel-preferences",
       storage: appStorage,
     },
   ),

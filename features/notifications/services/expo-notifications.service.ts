@@ -22,8 +22,8 @@ import type {
   ScheduledTravelNotificationCategory,
 } from "../types";
 
-const TRAVELGENIOUS_SCOPE = "travelgenious" as const;
-const TRAVELGENIOUS_CHANNEL_ID = "travel-updates";
+const HAYA_TRIP_SCOPE = "hayatrip" as const;
+const HAYA_TRIP_CHANNEL_ID = "travel-updates";
 const HOUR_IN_MS = 1000 * 60 * 60;
 const MINIMUM_LEAD_IN_MS = 1000 * 60 * 10;
 const notificationsSupported =
@@ -41,10 +41,10 @@ if (notificationsSupported) {
   });
 }
 
-type TravelgeniousNotificationData = {
+type HayaTripNotificationData = {
   category: ScheduledTravelNotificationCategory;
   scheduledFor: string;
-  scope: typeof TRAVELGENIOUS_SCOPE;
+  scope: typeof HAYA_TRIP_SCOPE;
   url?: string;
 };
 
@@ -136,17 +136,17 @@ const getPermissionSnapshotAsync = async (): Promise<PermissionSnapshot> => {
   }
 };
 
-const isTravelgeniousNotificationData = (
+const isHayaTripNotificationData = (
   value: unknown,
-): value is TravelgeniousNotificationData => {
+): value is HayaTripNotificationData => {
   if (!value || typeof value !== "object") {
     return false;
   }
 
-  const candidate = value as Partial<TravelgeniousNotificationData>;
+  const candidate = value as Partial<HayaTripNotificationData>;
 
   return (
-    candidate.scope === TRAVELGENIOUS_SCOPE &&
+    candidate.scope === HAYA_TRIP_SCOPE &&
     typeof candidate.scheduledFor === "string" &&
     typeof candidate.category === "string" &&
     notificationCategories.has(
@@ -158,7 +158,7 @@ const isTravelgeniousNotificationData = (
 const mapScheduledRequest = (
   request: Notifications.NotificationRequest,
 ): ScheduledTravelNotification | null => {
-  if (!isTravelgeniousNotificationData(request.content.data)) {
+  if (!isHayaTripNotificationData(request.content.data)) {
     return null;
   }
 
@@ -170,7 +170,7 @@ const mapScheduledRequest = (
     date: data.scheduledFor,
     ...(typeof data.url === "string" ? { deepLink: data.url } : {}),
     id: request.identifier,
-    scope: TRAVELGENIOUS_SCOPE,
+    scope: HAYA_TRIP_SCOPE,
     ...(request.content.subtitle ? { subtitle: request.content.subtitle } : {}),
     title: request.content.title ?? "",
   };
@@ -210,7 +210,7 @@ export const ensureNotificationChannelsAsync = async () => {
     return;
   }
 
-  await Notifications.setNotificationChannelAsync(TRAVELGENIOUS_CHANNEL_ID, {
+  await Notifications.setNotificationChannelAsync(HAYA_TRIP_CHANNEL_ID, {
     description: "Trip reminders, Heia prompts, and concierge alerts.",
     importance: Notifications.AndroidImportance.DEFAULT,
     lightColor: "#0F49BD",
@@ -273,8 +273,8 @@ export const buildLocalReminderTemplates = (
       category: "tripReminder",
       date: resolveTripLeadDate(nextTrip.startDate, 2, 9, 0, 18).toISOString(),
       deepLink: "/trips",
-      id: `travelgenious-trip-reminder-${nextTrip.id}`,
-      scope: TRAVELGENIOUS_SCOPE,
+      id: `hayatrip-trip-reminder-${nextTrip.id}`,
+      scope: HAYA_TRIP_SCOPE,
       title: i18n.t("notificationTemplates.tripReminder.title", {
         title: nextTrip.title,
       }),
@@ -293,8 +293,8 @@ export const buildLocalReminderTemplates = (
         26,
       ).toISOString(),
       deepLink: "/trips",
-      id: `travelgenious-travel-checklist-${nextTrip.id}`,
-      scope: TRAVELGENIOUS_SCOPE,
+      id: `hayatrip-travel-checklist-${nextTrip.id}`,
+      scope: HAYA_TRIP_SCOPE,
       title: i18n.t("notificationTemplates.travelChecklist.title"),
     });
   }
@@ -315,8 +315,8 @@ export const buildLocalReminderTemplates = (
         8,
       ).toISOString(),
       deepLink: "/heia",
-      id: `travelgenious-ai-prompt-${planningTrip.id}`,
-      scope: TRAVELGENIOUS_SCOPE,
+      id: `hayatrip-ai-prompt-${planningTrip.id}`,
+      scope: HAYA_TRIP_SCOPE,
       title: i18n.t("notificationTemplates.aiPrompt.title"),
     });
   }
@@ -333,8 +333,8 @@ export const buildLocalReminderTemplates = (
         6,
       ).toISOString(),
       deepLink: `/package/${featuredOffer.id}`,
-      id: `travelgenious-saved-offer-${featuredOffer.id}`,
-      scope: TRAVELGENIOUS_SCOPE,
+      id: `hayatrip-saved-offer-${featuredOffer.id}`,
+      scope: HAYA_TRIP_SCOPE,
       title: i18n.t("notificationTemplates.savedOfferAlert.title", {
         destination: featuredOffer.destination,
       }),
@@ -359,8 +359,8 @@ export const buildLocalReminderTemplates = (
           10,
         ).toISOString(),
         deepLink: `/flight-booking/${booking.id}`,
-        id: `travelgenious-booking-milestone-${booking.id}`,
-        scope: TRAVELGENIOUS_SCOPE,
+        id: `hayatrip-booking-milestone-${booking.id}`,
+        scope: HAYA_TRIP_SCOPE,
         title: i18n.t("notificationTemplates.bookingMilestone.title", {
           title: nextTrip.title,
         }),
@@ -371,7 +371,7 @@ export const buildLocalReminderTemplates = (
   return templates;
 };
 
-export const getTravelgeniousScheduledNotificationsAsync = async () => {
+export const getHayaTripScheduledNotificationsAsync = async () => {
   if (!notificationsSupported) {
     return [] as ScheduledTravelNotification[];
   }
@@ -395,7 +395,7 @@ export const getTravelgeniousScheduledNotificationsAsync = async () => {
   }
 };
 
-export const cancelTravelgeniousScheduledNotificationsAsync = async (
+export const cancelHayaTripScheduledNotificationsAsync = async (
   category?: ScheduledTravelNotificationCategory,
 ) => {
   if (!notificationsSupported) {
@@ -403,7 +403,7 @@ export const cancelTravelgeniousScheduledNotificationsAsync = async (
   }
 
   const scheduledNotifications =
-    await getTravelgeniousScheduledNotificationsAsync();
+    await getHayaTripScheduledNotificationsAsync();
 
   await Promise.all(
     scheduledNotifications
@@ -432,12 +432,12 @@ export const syncLocalTravelNotificationsAsync = async ({
   const permissions = await getPermissionSnapshotAsync();
 
   if (!notificationsEnabled || permissions.permissionsStatus !== "granted") {
-    await cancelTravelgeniousScheduledNotificationsAsync();
+    await cancelHayaTripScheduledNotificationsAsync();
     return [] as ScheduledTravelNotification[];
   }
 
   await ensureNotificationChannelsAsync();
-  await cancelTravelgeniousScheduledNotificationsAsync();
+  await cancelHayaTripScheduledNotificationsAsync();
 
   const templates = buildLocalReminderTemplates(locale).filter(
     (notification) => notificationPreferences[notification.category],
@@ -452,7 +452,7 @@ export const syncLocalTravelNotificationsAsync = async ({
           data: {
             category: notification.category,
             scheduledFor: notification.date,
-            scope: TRAVELGENIOUS_SCOPE,
+            scope: HAYA_TRIP_SCOPE,
             ...(notification.deepLink ? { url: notification.deepLink } : {}),
           },
           title: notification.title,
@@ -460,7 +460,7 @@ export const syncLocalTravelNotificationsAsync = async ({
         identifier: notification.id,
         trigger: {
           ...(Platform.OS === "android"
-            ? { channelId: TRAVELGENIOUS_CHANNEL_ID }
+            ? { channelId: HAYA_TRIP_CHANNEL_ID }
             : {}),
           date: new Date(notification.date),
           type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -469,14 +469,14 @@ export const syncLocalTravelNotificationsAsync = async ({
     ),
   );
 
-  return getTravelgeniousScheduledNotificationsAsync();
+  return getHayaTripScheduledNotificationsAsync();
 };
 
 export const getNotificationCapabilitySnapshotAsync =
   async (): Promise<NotificationCapabilitySnapshot> => {
     const [permissionSnapshot, scheduledNotifications] = await Promise.all([
       getPermissionSnapshotAsync(),
-      getTravelgeniousScheduledNotificationsAsync(),
+      getHayaTripScheduledNotificationsAsync(),
     ]);
 
     return {

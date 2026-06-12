@@ -5,7 +5,7 @@ import type {
   AppVariant,
 } from "../../types/env";
 
-const DEFAULT_API_BASE_URL = "https://api.travelgenious.app";
+const DEFAULT_API_BASE_URL = "https://api.hayatrip.app";
 const DEFAULT_APP_ENV: AppEnvironment = "development";
 const DEFAULT_APP_MODE: AppMode = "demo";
 

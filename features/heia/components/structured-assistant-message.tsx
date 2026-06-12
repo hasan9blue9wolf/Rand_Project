@@ -29,6 +29,25 @@ type StructuredAssistantMessageProps = {
   onQuickReplyPress: (quickReply: string) => void;
 };
 
+const containsArabicText = (value: string) => /[\u0600-\u06FF]/.test(value);
+
+const getFollowUpQuestionSetText = (
+  content: AiAdvisorAssistantStructuredChatMessage["response"],
+) => {
+  if (content.type !== "follow_up_question_set") {
+    return "";
+  }
+
+  return [
+    content.intro,
+    ...content.questions.flatMap((question) => [
+      question.helpText ?? "",
+      question.question,
+      ...question.quickReplies,
+    ]),
+  ].join(" ");
+};
+
 const QuickReplyChip = memo(function QuickReplyChip({
   question,
   onPress,
@@ -203,10 +222,17 @@ export const StructuredAssistantMessage = memo(function StructuredAssistantMessa
   }
 
   if (content.type === "follow_up_question_set") {
+    const titleLocale = containsArabicText(getFollowUpQuestionSetText(content))
+      ? "ar"
+      : undefined;
+    const followUpTitle = titleLocale
+      ? t("heiaChat.followUpTitle", { lng: titleLocale })
+      : t("heiaChat.followUpTitle");
+
     return (
       <MotionView index={messageIndex} style={containerStyle} variant="chat">
         <AppCard>
-          <AppText variant="title">{t("heiaChat.followUpTitle")}</AppText>
+          <AppText variant="title">{followUpTitle}</AppText>
           <AppText>{content.intro}</AppText>
           <View style={{ gap: spacing.md, marginTop: spacing.md }}>
             {content.questions.map((question) => (

@@ -1,6 +1,6 @@
-# TravelGenious
+# Haya Trip
 
-TravelGenious is a production-oriented Expo React Native app built with TypeScript for premium travel planning. It ships with five initial screens, English and Arabic localization, RTL support, strict TypeScript, linting, formatting, environment configuration, and a scalable feature-based structure.
+Haya Trip is a production-oriented Expo React Native app built with TypeScript for premium travel planning. It ships with five initial screens, English and Arabic localization, RTL support, strict TypeScript, linting, formatting, environment configuration, and a scalable feature-based structure.
 
 ## Launch Docs
 
@@ -21,7 +21,7 @@ The app now defaults to an investor-demo setup intended for polished Android APK
 
 ## Android Investor APK
 
-TravelGenious is a true Expo React Native mobile app and is ready to produce an installable Android APK for investor demos through EAS.
+Haya Trip is a true Expo React Native mobile app and is ready to produce an installable Android APK for investor demos through EAS.
 
 The dedicated profile is `investor-apk` and is configured to:
 
@@ -72,13 +72,13 @@ npx eas-cli build:list --platform android --limit 5
 Download the APK after the build finishes:
 
 ```bash
-curl -L "<PASTE_APK_URL_FROM_EAS_OUTPUT>" -o travelgenious-investor.apk
+curl -L "<PASTE_APK_URL_FROM_EAS_OUTPUT>" -o hayatrip-investor.apk
 ```
 
 Install the APK on a connected Android phone with ADB:
 
 ```bash
-adb install -r travelgenious-investor.apk
+adb install -r hayatrip-investor.apk
 ```
 
 If you prefer manual installation, download the APK from the EAS build page, transfer it to the phone, and open it there.
@@ -180,7 +180,7 @@ APP_VERSION=1.0.0
 IOS_BUILD_NUMBER=1
 ANDROID_VERSION_CODE=1
 EXPO_PUBLIC_APP_MODE=demo
-EXPO_PUBLIC_API_BASE_URL=https://api.travelgenious.app
+EXPO_PUBLIC_API_BASE_URL=https://api.hayatrip.app
 EXPO_PUBLIC_EAS_UPDATE_URL=
 EXPO_PUBLIC_SUPABASE_URL=
 EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
@@ -208,7 +208,7 @@ Notes:
 
 ## Supabase Setup
 
-TravelGenious now includes a typed Supabase integration for:
+Haya Trip now includes a typed Supabase integration for:
 
 - authentication
 - user profiles
@@ -226,14 +226,14 @@ Key files:
 - Auth bootstrap: [auth.ts](/home/bluewolf/Desktop/Rand_Project/services/supabase/auth.ts)
 - Schema proposal: [SCHEMA_PROPOSAL.md](/home/bluewolf/Desktop/Rand_Project/supabase/SCHEMA_PROPOSAL.md)
 - Full schema: [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql)
-- Migration: [20260327090000_initial_travelgenious.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_travelgenious.sql)
+- Migration: [20260327090000_initial_hayatrip.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_hayatrip.sql)
 
 Suggested setup flow:
 
 1. Create a Supabase project.
 2. Copy the project URL into `EXPO_PUBLIC_SUPABASE_URL`.
 3. Copy the publishable key into `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-4. Apply the schema with either the SQL editor using [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql) or the CLI migration in [20260327090000_initial_travelgenious.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_travelgenious.sql).
+4. Apply the schema with either the SQL editor using [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql) or the CLI migration in [20260327090000_initial_hayatrip.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_hayatrip.sql).
 5. Enable Email auth in the Supabase dashboard.
 6. Start the app with `npm run start`.
 
@@ -262,7 +262,7 @@ For investor demos, keep `EXPO_PUBLIC_HEIA_PROVIDER=mock` so the assistant remai
 
 ## Notifications
 
-TravelGenious now includes a local notification layer built with Expo Notifications and structured so push support can be added later without changing the screen architecture.
+Haya Trip now includes a local notification layer built with Expo Notifications and structured so push support can be added later without changing the screen architecture.
 
 Key files:
 
@@ -311,7 +311,7 @@ npm run prebuild
 
 ## Testing
 
-TravelGenious now includes a Jest + React Native Testing Library setup aimed at fast demo-confidence coverage.
+Haya Trip now includes a Jest + React Native Testing Library setup aimed at fast demo-confidence coverage.
 
 Included layers:
 

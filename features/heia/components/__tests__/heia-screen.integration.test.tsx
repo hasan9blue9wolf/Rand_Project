@@ -1,4 +1,5 @@
 import {
+  beforeEach,
   describe,
   expect,
   it,
@@ -35,6 +36,10 @@ jest.mock("../../../aiAdvisor/services/ai-advisor.service", () => ({
 }));
 
 describe("HeiaScreen AI integration", () => {
+  beforeEach(() => {
+    mockRequestAiAdvisorTurn.mockClear();
+  });
+
   it("renders a structured recommendation returned by the AI layer", async () => {
     mockRequestAiAdvisorTurn.mockResolvedValue({
       memory: {
@@ -93,5 +98,92 @@ describe("HeiaScreen AI integration", () => {
     expect(router.push).toHaveBeenCalledWith(
       appRoutes.packageDetails("maldives-escape"),
     );
+  });
+
+  it("routes Arabic user messages through the Arabic AI locale", async () => {
+    mockRequestAiAdvisorTurn.mockResolvedValue({
+      memory: {
+        latestUserMessage: "شلون اكدر اطلب",
+        locale: "ar",
+        missingPreferenceIds: [],
+        preferenceProfile: {},
+        salientFacts: [],
+        turnCount: 1,
+        userIntentSummary: "سؤال عن طريقة الحجز",
+      },
+      providerName: "mock-heia",
+      responses: [
+        {
+          id: "booking-flow",
+          text: "تقدر تختار الباقة، تراجع ملخص الحجز، تضيف بيانات المسافرين، وبعدها تكمل الدفع.",
+          tone: "guidance",
+          type: "plain_text_guidance",
+        },
+      ],
+      usedFallback: false,
+    });
+
+    renderWithProviders(<HeiaScreen />);
+
+    fireEvent.changeText(
+      screen.getByPlaceholderText("Message Heia..."),
+      "شلون اكدر اطلب",
+    );
+    fireEvent.press(screen.getByLabelText("Send message"));
+
+    await waitFor(() => {
+      expect(mockRequestAiAdvisorTurn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          latestUserMessage: "شلون اكدر اطلب",
+          locale: "ar",
+        }),
+      );
+    });
+  });
+
+  it("localizes follow-up card titles to Arabic when the AI response is Arabic", async () => {
+    mockRequestAiAdvisorTurn.mockResolvedValue({
+      memory: {
+        latestUserMessage: "اريد طوكيو",
+        locale: "ar",
+        missingPreferenceIds: [],
+        preferenceProfile: {},
+        salientFacts: [],
+        turnCount: 1,
+        userIntentSummary: "المستخدم يريد رحلة إلى طوكيو",
+      },
+      providerName: "mock-heia",
+      responses: [
+        {
+          id: "arabic-follow-up",
+          intro:
+            "حسب طلبك، هذا يوجهنا بقوة نحو طوكيو والمدينة. حتى أرتبلك الخيار الأنسب، أحتاج بس شغلتين بعدها نثبت التفاصيل.",
+          questions: [
+            {
+              helpText: "حتى أضبط الفندق والتجربة.",
+              id: "budget",
+              question: "شنو الميزانية التقريبية؟",
+              quickReplies: ["متوسطة", "راقية"],
+            },
+          ],
+          type: "follow_up_question_set",
+        },
+      ],
+      usedFallback: false,
+    });
+
+    renderWithProviders(<HeiaScreen />);
+
+    fireEvent.changeText(
+      screen.getByPlaceholderText("Message Heia..."),
+      "اريد طوكيو",
+    );
+    fireEvent.press(screen.getByLabelText("Send message"));
+
+    await waitFor(() => {
+      expect(screen.getByText("أسئلة لتحسين التطابق")).toBeTruthy();
+    });
+
+    expect(screen.queryByText("Questions to sharpen the fit")).toBeNull();
   });
 });

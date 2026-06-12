@@ -1,6 +1,6 @@
 export const en = {
   common: {
-    appName: "TravelGenious",
+    appName: "Haya Trip",
     heia: "Heia",
     back: "Back",
     search: "Search",
@@ -330,7 +330,7 @@ export const en = {
   },
   checkout: {
     title: "Checkout",
-    subtitle: "Final review before TravelGenious confirms your booking.",
+    subtitle: "Final review before Haya Trip confirms your booking.",
     summaryTitle: "Trip total",
     paymentTitle: "Payment method",
     securePaymentLabel: "Payment status",
@@ -346,7 +346,7 @@ export const en = {
     successEyebrow: "Booking confirmed",
     successTitle: "Your investor-demo booking is fully staged.",
     successBody:
-      "TravelGenious has locked the itinerary, queued the concierge brief, and prepared the next premium follow-up.",
+      "Haya Trip has locked the itinerary, queued the concierge brief, and prepared the next premium follow-up.",
     bookingReference: "Booking reference",
     deliveryEta: "Delivery timing",
     deliveryEtaValue: "Confirmation in under a minute",
@@ -357,7 +357,7 @@ export const en = {
     heiaCta: "Ask Heia to refine it",
   },
   heiaChat: {
-    title: "Heia - TravelGenious Advisor",
+    title: "Heia - Haya Trip Advisor",
     subtitle:
       "Ask about destinations, timing, budget, or the style of trip you want.",
     promptPlaceholder: "Message Heia...",
@@ -417,8 +417,8 @@ export const en = {
     welcome: {
       heroTitle: "Travel planning that feels composed from the start.",
       heroSubtitle:
-        "Step into TravelGenious with elegant booking tools, polished AI guidance, and a profile tuned to your travel taste.",
-      title: "Welcome to TravelGenious",
+        "Step into Haya Trip with elegant booking tools, polished AI guidance, and a profile tuned to your travel taste.",
+      title: "Welcome to Haya Trip",
       subtitle:
         "Choose how you want to enter. We can set up a full account, keep things light with guest mode, or help you pick up where you left off.",
       signInCta: "Sign in",
@@ -430,8 +430,8 @@ export const en = {
         "Your account is ready. Continue into the app or refine the travel profile Heia uses to personalize every recommendation.",
       title: "You are already signed in",
       subtitle:
-        "We kept your premium access warm. Continue to TravelGenious or revisit your preferences before your next trip.",
-      continueCta: "Enter TravelGenious",
+        "We kept your premium access warm. Continue to Haya Trip or revisit your preferences before your next trip.",
+      continueCta: "Enter Haya Trip",
       refineCta: "Refine preferences",
       signOutCta: "Sign out",
     },
@@ -453,7 +453,7 @@ export const en = {
       tabLabel: "Sign up",
       title: "Create your account",
       subtitle:
-        "We will personalize TravelGenious around your taste the moment you finish setup.",
+        "We will personalize Haya Trip around your taste the moment you finish setup.",
       primaryCta: "Create account",
     },
     forgotPassword: {
@@ -512,7 +512,7 @@ export const en = {
       },
     },
     onboarding: {
-      heroTitle: "Let’s tune TravelGenious to your travel taste.",
+      heroTitle: "Let’s tune Haya Trip to your travel taste.",
       heroSubtitle:
         "These preferences help Heia ask sharper follow-up questions and return recommendations that already feel close to right.",
       progressLabel: "Preference setup",
@@ -643,7 +643,7 @@ export const en = {
     title: "Profile & preferences",
     subtitle: "Adjust language, trip preferences, and trusted travel settings.",
     memberSince: "Member since {{year}}",
-    membershipTitle: "TravelGenious Elite",
+    membershipTitle: "Haya Trip Elite",
     premiumTier: "Signature traveller",
     rtlNote:
       "Switching between English and Arabic updates the layout direction.",
@@ -663,7 +663,7 @@ export const en = {
     notificationsBody:
       "Elegant reminders for departures, Heia prompts, offer shifts, and premium trip milestones.",
     notificationsHelp:
-      "Allow TravelGenious to surface calm local alerts on this device.",
+      "Allow Haya Trip to surface calm local alerts on this device.",
     notificationsSwitchTitle: "VIP travel notifications",
     notificationsPermissionBody:
       "System permission is still needed before reminders can appear on this device.",
@@ -680,7 +680,7 @@ export const en = {
     openSystemSettings: "Open system settings",
     preferencesTitle: "Reminder preferences",
     preferencesBody:
-      "Choose which premium reminders TravelGenious should prepare locally.",
+      "Choose which premium reminders Haya Trip should prepare locally.",
     preferenceLabels: {
       tripReminder: {
         title: "Trip reminders",
@@ -709,7 +709,7 @@ export const en = {
     scheduledSummary_one: "{{count}} local reminder prepared",
     scheduledSummary_other: "{{count}} local reminders prepared",
     scheduleEmpty:
-      "No reminders are currently queued. Turn on a few categories and TravelGenious will prepare them.",
+      "No reminders are currently queued. Turn on a few categories and Haya Trip will prepare them.",
     schedulePending:
       "Reminder scheduling will populate here after permissions are available.",
     notificationKinds: {

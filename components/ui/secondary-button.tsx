@@ -85,19 +85,6 @@ export const SecondaryButton = ({
           },
         ]}
       >
-        <View
-          pointerEvents="none"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.5)",
-            borderRadius: radius.round,
-            height: 40,
-            left: 8,
-            opacity: 0.75,
-            position: "absolute",
-            top: 7,
-            width: "38%",
-          }}
-        />
         {loading ? (
           <ActivityIndicator color={toneStyle.color} />
         ) : (

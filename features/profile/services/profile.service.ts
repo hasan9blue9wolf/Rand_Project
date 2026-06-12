@@ -74,7 +74,7 @@ const buildProfileUpsert = async (
   return {
     ...(input.avatarUrl ? { avatar_url: input.avatarUrl } : {}),
     ...(input.departureCity ? { departure_city: input.departureCity } : {}),
-    email: user.email ?? `${user.id}@travelgenious.local`,
+    email: user.email ?? `${user.id}@hayatrip.local`,
     ...(input.firstName ? { first_name: input.firstName } : {}),
     ...(input.homeAirport ? { home_airport: input.homeAirport } : {}),
     id: user.id,

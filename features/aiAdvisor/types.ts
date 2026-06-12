@@ -270,7 +270,7 @@ export type AiAdvisorPromptBundle = {
   user: string;
 };
 
-export type AiAdvisorProviderMode = "mock" | "real";
+export type AiAdvisorProviderMode = "direct-preview" | "mock" | "real";
 
 export type AiAdvisorProviderRequest = {
   history: AiAdvisorChatMessage[];

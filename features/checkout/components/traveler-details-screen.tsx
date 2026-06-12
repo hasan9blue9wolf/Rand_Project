@@ -182,7 +182,7 @@ export const TravelerDetailsScreen = () => {
           />
           <DetailRow
             label={language === "ar" ? "البريد" : "Email"}
-            value="concierge@travelgenious.app"
+            value="concierge@hayatrip.app"
           />
           <DetailRow
             label={language === "ar" ? "الهاتف" : "Phone"}

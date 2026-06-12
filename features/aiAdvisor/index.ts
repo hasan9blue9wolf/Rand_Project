@@ -11,6 +11,7 @@ export * from "./services/ai-advisor.prompt-templates";
 export * from "./services/ai-advisor.schemas";
 export * from "./services/ai-advisor.service";
 export * from "./services/ai-advisor-history.service";
+export * from "./services/direct-preview-ai-advisor.provider";
 export * from "./services/heia-backend.client";
 export * from "./services/mock-ai-advisor.provider";
 export * from "./services/real-ai-advisor.provider";

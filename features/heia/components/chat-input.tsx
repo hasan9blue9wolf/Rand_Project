@@ -40,9 +40,9 @@ export const ChatInput = memo(function ChatInput({
         backgroundColor: "rgba(255,255,255,0.92)",
         borderTopColor: "rgba(223, 232, 242, 0.72)",
         borderTopWidth: 1,
-        paddingBottom: Math.max(bottomInset, spacing.md),
+        paddingBottom: Math.max(bottomInset, spacing.sm),
         paddingHorizontal: spacing.screen,
-        paddingTop: spacing.md,
+        paddingTop: spacing.xs,
       }}
     >
       <View
@@ -56,30 +56,20 @@ export const ChatInput = memo(function ChatInput({
           style={[
             shadows.card,
             {
+              alignItems: "center",
               backgroundColor: "rgba(255,255,255,0.88)",
               borderColor: colors.border.soft,
-              borderRadius: radius.md,
+              borderRadius: radius.round,
               borderWidth: 1,
               flex: 1,
               flexDirection: isRTL ? "row-reverse" : "row",
-              minHeight: 56,
+              gap: spacing.xs,
+              minHeight: 50,
               overflow: "hidden",
-              paddingHorizontal: spacing.md,
+              paddingHorizontal: spacing.sm,
             },
           ]}
         >
-          <View
-            pointerEvents="none"
-            style={{
-              backgroundColor: "rgba(15, 73, 189, 0.04)",
-              borderRadius: radius.round,
-              height: 42,
-              left: 8,
-              position: "absolute",
-              top: 7,
-              width: "42%",
-            }}
-          />
           <TextInput
             multiline
             onChangeText={onChangeText}
@@ -90,10 +80,13 @@ export const ChatInput = memo(function ChatInput({
               color: colors.text.primary,
               flex: 1,
               fontSize: 15,
+              lineHeight: 20,
               maxHeight: 110,
-              minHeight: 54,
-              paddingVertical: spacing.sm + 2,
+              minHeight: 38,
+              paddingHorizontal: spacing.xs,
+              paddingVertical: spacing.xxs,
               textAlign: isRTL ? "right" : "left",
+              textAlignVertical: "center",
               writingDirection: isRTL ? "rtl" : "ltr",
             }}
             value={value}
@@ -106,10 +99,10 @@ export const ChatInput = memo(function ChatInput({
               alignItems: "center",
               backgroundColor: colors.background.softBlue,
               borderRadius: radius.round,
-              height: 36,
+              height: 34,
               justifyContent: "center",
               opacity: isMicDisabled ? 0.5 : 1,
-              width: 36,
+              width: 34,
             }}
             disabled={isMicDisabled}
             onPress={onMicPress}
@@ -128,11 +121,11 @@ export const ChatInput = memo(function ChatInput({
             {
               alignItems: "center",
               backgroundColor: colors.navy[800],
-              borderRadius: radius.md,
+              borderRadius: radius.round,
+              height: 50,
               justifyContent: "center",
               opacity: isActionDisabled ? 0.55 : 1,
-              width: 54,
-              height: 54,
+              width: 50,
             },
           ]}
           disabled={isActionDisabled}
@@ -156,7 +149,7 @@ export const ChatInput = memo(function ChatInput({
       <AppText
         align="center"
         color={colors.text.muted}
-        style={{ fontSize: 10, marginTop: spacing.xs }}
+        style={{ fontSize: 10, marginTop: spacing.xxs }}
       >
         {t("heiaChat.disclaimer")}
       </AppText>

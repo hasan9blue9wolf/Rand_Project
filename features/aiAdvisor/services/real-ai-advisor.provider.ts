@@ -39,5 +39,5 @@ export const createRealAiAdvisorProvider = (): AiAdvisorProvider => ({
     }
   },
   mode: "real",
-  name: "travelgenious-heia-backend",
+  name: "hayatrip-heia-backend",
 });

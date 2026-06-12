@@ -205,7 +205,7 @@ begin
   )
   values (
     new.id,
-    coalesce(new.email, new.id::text || '@travelgenious.local'),
+    coalesce(new.email, new.id::text || '@hayatrip.local'),
     nullif(new.raw_user_meta_data ->> 'first_name', ''),
     nullif(new.raw_user_meta_data ->> 'last_name', ''),
     coalesce(nullif(new.raw_user_meta_data ->> 'preferred_locale', ''), 'en')

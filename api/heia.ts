@@ -25,7 +25,7 @@ export const config = {
   runtime: "edge",
 };
 
-const HEIA_PROVIDER_NAME = "travelgenious-heia";
+const HEIA_PROVIDER_NAME = "hayatrip-heia";
 
 const sleep = (timeoutMs: number) =>
   new Promise((resolve) => setTimeout(resolve, timeoutMs));

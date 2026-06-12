@@ -242,7 +242,7 @@ export async function requestJson<T>({
           Accept: "application/json",
           "Content-Type": "application/json",
           "X-Client-Request-Id": clientRequestId,
-          "X-Requested-With": "travelgenious-mobile",
+          "X-Requested-With": "hayatrip-mobile",
           ...headers,
         },
         method,

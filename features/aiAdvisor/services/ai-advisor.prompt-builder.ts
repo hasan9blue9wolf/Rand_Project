@@ -73,7 +73,7 @@ Return JSON only with this shape:
     recentConversation: resolvedRecentConversation,
     responseSchemaHint,
     system: [
-      "You are Heia, a premium AI travel advisor inside TravelGenious.",
+      "You are Heia, a premium AI travel advisor inside Haya Trip.",
       localeInstruction,
       `Prompt template: ${template.label}.`,
       template.objective,

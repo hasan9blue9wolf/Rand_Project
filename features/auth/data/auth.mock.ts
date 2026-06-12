@@ -2,7 +2,7 @@ import type { AuthScreenData, AuthSession } from "../types";
 
 export const authSessionMock: AuthSession = {
   displayName: "Maya",
-  email: "maya@travelgenious.app",
+  email: "maya@hayatrip.app",
   firstName: "Maya",
   userId: "user-maya-01",
 };

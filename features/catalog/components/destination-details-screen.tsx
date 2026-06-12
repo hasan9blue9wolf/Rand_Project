@@ -85,8 +85,8 @@ const destinationStories = {
       ],
     },
     overview: {
-      ar: "برشلونة في ترافيل جينيوس تبدو مدينة أنيقة وسهلة. الثقافة قريبة، والإقامة مركزية، واليوم موزع بين النشاط والراحة.",
-      en: "Barcelona in TravelGenious feels polished and easy. Culture stays close, the hotel stays central, and the day moves between energy and comfort.",
+      ar: "برشلونة في هيا تريب تبدو مدينة أنيقة وسهلة. الثقافة قريبة، والإقامة مركزية، واليوم موزع بين النشاط والراحة.",
+      en: "Barcelona in Haya Trip feels polished and easy. Culture stays close, the hotel stays central, and the day moves between energy and comfort.",
     },
     rhythm: {
       ar: [

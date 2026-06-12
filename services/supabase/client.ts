@@ -14,8 +14,8 @@ const { supabasePublishableKey, supabaseUrl } = getSupabaseRuntimeConfig();
 const supabaseEnabled = isSupabaseConfigured();
 
 const fallbackSupabaseKey =
-  "sb_publishable_placeholder_key_for_travelgenious_bootstrap";
-const fallbackSupabaseUrl = "https://travelgenious.invalid";
+  "sb_publishable_placeholder_key_for_hayatrip_bootstrap";
+const fallbackSupabaseUrl = "https://hayatrip.invalid";
 
 export const supabase = createClient<Database>(
   supabaseUrl || fallbackSupabaseUrl,

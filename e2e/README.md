@@ -1,6 +1,6 @@
-# TravelGenious E2E Plan
+# Haya Trip E2E Plan
 
-TravelGenious is being demoed as an Android APK, so the recommended E2E tool for the first production-grade pass is `Maestro`.
+Haya Trip is being demoed as an Android APK, so the recommended E2E tool for the first production-grade pass is `Maestro`.
 
 Why Maestro for this project:
 

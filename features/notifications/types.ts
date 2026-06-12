@@ -45,7 +45,7 @@ export type ScheduledTravelNotification = {
   date: string;
   deepLink?: string;
   id: string;
-  scope: "travelgenious";
+  scope: "hayatrip";
   subtitle?: string;
   title: string;
 };

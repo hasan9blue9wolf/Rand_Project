@@ -9,7 +9,7 @@ import { buildPublicRuntimeConfig } from "../public-config.shared";
 describe("buildPublicRuntimeConfig", () => {
   it("drops insecure production values and secret-like public keys", () => {
     const config = buildPublicRuntimeConfig({
-      apiBaseUrl: "http://internal.travelgenious.local",
+      apiBaseUrl: "http://internal.hayatrip.local",
       appEnv: "production",
       appMode: "live",
       supabasePublishableKey: "sb_secret_server_only_key",
@@ -17,7 +17,7 @@ describe("buildPublicRuntimeConfig", () => {
     });
 
     expect(config).toEqual({
-      apiBaseUrl: "https://api.travelgenious.app",
+      apiBaseUrl: "https://api.hayatrip.app",
       appEnv: "production",
       appMode: "live",
       appVariant: "production",

@@ -72,7 +72,12 @@ export const ChatBubble = memo(function ChatBubble({
           <Avatar size={AVATAR_SIZE} uri={assistantAvatarUri} />
         ) : null}
 
-        <View style={{ maxWidth: "86%" }}>
+        <View
+          style={{
+            maxWidth: "86%",
+            minWidth: isAssistant ? undefined : 80,
+          }}
+        >
           {isAssistant && showAvatar ? (
             <AppText
               color={colors.text.muted}
@@ -97,6 +102,7 @@ export const ChatBubble = memo(function ChatBubble({
               borderTopLeftRadius: alignToStart ? radius.xs : radius.md,
               borderTopRightRadius: alignToStart ? radius.md : radius.xs,
               borderWidth: isAssistant ? 0 : 1,
+              minWidth: isAssistant ? undefined : 80,
               paddingHorizontal: spacing.md,
               paddingVertical: spacing.sm + 2,
             }}
