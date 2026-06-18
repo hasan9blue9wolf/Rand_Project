@@ -12,7 +12,7 @@ export const authScreenMock: AuthScreenData = {
     {
       id: "firstName",
       label: "First name",
-      placeholder: "How should Heia greet you?",
+      placeholder: "How should Haya greet you?",
     },
     {
       id: "email",

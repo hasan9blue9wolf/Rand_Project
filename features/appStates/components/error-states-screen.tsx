@@ -101,11 +101,11 @@ export const ErrorStatesScreen = () => {
         />
 
         <EmptyState
-          actionLabel={language === "ar" ? "افتح هيا" : "Open Heia"}
+          actionLabel={language === "ar" ? "افتح هيا" : "Open Haya"}
           description={
             language === "ar"
               ? "إذا احتاجت خدمة المساعدة لمحاولة أخرى، يبقى الانتقال إلى هيا مساراً سريعاً وواثقاً."
-              : "If the support service needs another pass, opening Heia still gives users a fast and trustworthy path."
+              : "If the support service needs another pass, opening Haya still gives users a fast and trustworthy path."
           }
           icon="chatbubble-ellipses-outline"
           onPress={() => router.push(appRoutes.heia)}

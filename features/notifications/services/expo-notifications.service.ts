@@ -211,7 +211,7 @@ export const ensureNotificationChannelsAsync = async () => {
   }
 
   await Notifications.setNotificationChannelAsync(HAYA_TRIP_CHANNEL_ID, {
-    description: "Trip reminders, Heia prompts, and concierge alerts.",
+    description: "Trip reminders, Haya prompts, and concierge alerts.",
     importance: Notifications.AndroidImportance.DEFAULT,
     lightColor: "#0F49BD",
     name: "Travel updates",

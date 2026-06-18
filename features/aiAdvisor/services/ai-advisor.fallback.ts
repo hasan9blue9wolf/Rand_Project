@@ -14,7 +14,7 @@ export const buildAiAdvisorSafetyResponses = ({
     id: "safety-guidance",
     text:
       locale === "ar"
-        ? "لا أستطيع المساعدة في أي طلب يرتبط بتجاوز القوانين أو الوثائق المزورة. إذا أردت، أستطيع المساعدة في تخطيط سفر نظامي وآمن ومناسب لميزانيتك."
+        ? "ما أكدر أساعد بأي طلب يرتبط بتجاوز القوانين أو الوثائق المزورة. إذا تريد، أكدر أساعدك بتخطيط سفر نظامي وآمن ومناسب لميزانيتك."
         : "I can’t help with illegal travel activity or forged documents. I can help you plan a legitimate, safe trip that fits your budget and priorities instead.",
     tone: "safety",
     type: "plain_text_guidance",
@@ -23,7 +23,7 @@ export const buildAiAdvisorSafetyResponses = ({
     id: "safety-follow-up",
     intro:
       locale === "ar"
-        ? "إذا أردت متابعة تخطيط قانوني، أجب عن واحدة من هذه النقاط:"
+        ? "إذا تريد نكمل تخطيط قانوني، جاوب على نقطة وحدة:"
         : "If you want to continue with legitimate planning, answer one of these quick prompts:",
     questions: [
       {
@@ -40,7 +40,7 @@ export const buildAiAdvisorSafetyResponses = ({
       {
         id: "safety-vibe",
         question:
-          locale === "ar" ? "ما الطابع الذي تريده؟" : "What vibe are you after?",
+          locale === "ar" ? "شنو الجو اللي تريده؟" : "What vibe are you after?",
         quickReplies:
           locale === "ar"
             ? ["شاطئي هادئ", "مدينة وثقافة", "جبال واسترخاء"]
@@ -62,7 +62,7 @@ export const buildAiAdvisorFallbackResponses = ({
     id: "fallback-guidance",
     text:
       locale === "ar"
-        ? `واجهتُ عثرة مؤقتة وأنا أبني التوصية. ${memorySummary}`
+        ? `صار خلل مؤقت وأنا أرتب التوصية. ${memorySummary}`
         : `I hit a temporary snag while building the recommendation. ${memorySummary}`,
     tone: "fallback",
     type: "plain_text_guidance",
@@ -71,18 +71,18 @@ export const buildAiAdvisorFallbackResponses = ({
     id: "fallback-follow-up",
     intro:
       locale === "ar"
-        ? "أعد الإرسال أو اختر إجابة سريعة وسأعيد بناء shortlist بشكل أوضح."
+        ? "أعد الإرسال أو اختار جواب سريع وأرتبلك الخيارات بشكل أوضح."
         : "Retry the request or tap one quick answer and I’ll rebuild the shortlist more cleanly.",
     questions: [
       {
         helpText:
           locale === "ar"
-            ? "أحتاج فقط إلى إشارة أوضح كي أستأنف."
+            ? "أحتاج بس إشارة أوضح حتى أكمل."
             : "I just need one sharper signal to continue.",
         id: "fallback-vibe",
         question:
           locale === "ar"
-            ? "أي mood تريد أن أركز عليه؟"
+            ? "شنو الجو اللي تريد أركز عليه؟"
             : "Which trip mood should I focus on?",
         quickReplies:
           locale === "ar"

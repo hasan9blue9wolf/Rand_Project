@@ -15,7 +15,7 @@ Haya Trip is a production-oriented Expo React Native app built with TypeScript f
 The app now defaults to an investor-demo setup intended for polished Android APK presentations:
 
 - `EXPO_PUBLIC_APP_MODE=demo` keeps the app fully interactive without requiring Supabase, a live AI backend, or real payments.
-- Heia uses premium scripted mock intelligence through the existing AI abstraction layer.
+- Haya uses premium scripted mock intelligence through the existing AI abstraction layer.
 - Auth, profile data, saved destinations, notifications metadata, checkout confirmation, and related backend-dependent flows fall back to realistic on-device demo services.
 - The live architecture is still preserved, so real providers can be re-enabled later without rewriting the screens.
 
@@ -27,7 +27,7 @@ The dedicated profile is `investor-apk` and is configured to:
 
 - build an `apk` instead of an `aab`
 - use `EXPO_PUBLIC_APP_MODE=demo`
-- keep Heia on polished mock intelligence
+- keep Haya on polished mock intelligence
 - avoid depending on live Supabase or payment backends
 - preserve the production app name and package identity for a premium install experience
 
@@ -108,7 +108,7 @@ Expo Router was chosen over wiring React Navigation manually for this project be
 ## Included Screens
 
 - Home
-- Heia AI Chat
+- Haya AI Chat
 - My Trips
 - Offers
 - Profile
@@ -215,7 +215,7 @@ Haya Trip now includes a typed Supabase integration for:
 - travel preferences
 - saved trips
 - saved destinations
-- Heia chat history
+- Haya chat history
 - notification metadata
 - offers bookmarks
 
@@ -247,12 +247,12 @@ supabase db push
 
 After schema changes, regenerate the database contract if needed and compare it with [database.types.ts](/home/bluewolf/Desktop/Rand_Project/services/supabase/database.types.ts).
 
-## Heia AI Backend
+## Haya AI Backend
 
-The Heia assistant uses a server-side integration for OpenAI. The mobile app never sends requests directly to OpenAI and never holds a secret API key.
+The Haya assistant uses a server-side integration for OpenAI. The mobile app never sends requests directly to OpenAI and never holds a secret API key.
 
 - Mobile app request layer: [services/api/request.ts](/home/bluewolf/Desktop/Rand_Project/services/api/request.ts)
-- Heia backend client: [heia-backend.client.ts](/home/bluewolf/Desktop/Rand_Project/features/aiAdvisor/services/heia-backend.client.ts)
+- Haya backend client: [heia-backend.client.ts](/home/bluewolf/Desktop/Rand_Project/features/aiAdvisor/services/heia-backend.client.ts)
 - Serverless route: [api/heia.ts](/home/bluewolf/Desktop/Rand_Project/api/heia.ts)
 - Rate limiting: [heia-rate-limit.ts](/home/bluewolf/Desktop/Rand_Project/api/_lib/heia-rate-limit.ts)
 
@@ -275,7 +275,7 @@ Key files:
 What is included now:
 
 - local trip reminders
-- Heia reminder prompts
+- Haya reminder prompts
 - saved offer alerts
 - booking milestone reminders
 - travel checklist reminders
@@ -318,8 +318,8 @@ Included layers:
 - unit tests for localization utilities
 - hook tests for language switching and Home search flow orchestration
 - shared UI component tests for primary CTA and chip interactions
-- screen tests for Home and Heia AI Chat
-- integration tests for demo auth service behavior and structured Heia response rendering
+- screen tests for Home and Haya AI Chat
+- integration tests for demo auth service behavior and structured Haya response rendering
 
 Key test files:
 
@@ -348,12 +348,12 @@ npm run test:ci
 
 - Zustand is used for local app state:
   - settings and language preference
-  - Heia chat session
+  - Haya chat session
   - last travel search
 - TanStack Query is used for async/server-style state:
   - offers
   - trips
-  - Heia prompt suggestions
+  - Haya prompt suggestions
 
 ### Forms
 
@@ -417,12 +417,12 @@ npx expo export --platform all --output-dir dist
 
 ## Performance Report
 
-- Virtualized the highest-churn surfaces with `FlatList`, including Offers, Trips, Notifications, Search Results, the home trending carousel, and the Heia chat feed.
+- Virtualized the highest-churn surfaces with `FlatList`, including Offers, Trips, Notifications, Search Results, the home trending carousel, and the Haya chat feed.
 - Reduced avoidable rerenders with `React.memo`, narrower Zustand selectors via `useShallow`, memoized derived values/handlers, and `startTransition` for chat/bootstrap updates.
 - Optimized remote images with cached sources plus safe prefetching for the home header and trending destinations.
 - Improved startup and navigation responsiveness by freezing inactive screens, deferring non-critical notification sync until after first interactions, and using placeholder query data instead of blocking initial renders.
 - Added weaker-network handling with offline-first TanStack Query defaults, cached placeholder reuse during refetches, and API retry/backoff logic for transient timeout and network failures.
-- Verified the changes with `npm run lint`, `npm run typecheck`, `npm run test`, and targeted component assertions for the Heia keyboard/virtualization behavior.
+- Verified the changes with `npm run lint`, `npm run typecheck`, `npm run test`, and targeted component assertions for the Haya keyboard/virtualization behavior.
 
 ## Notes
 

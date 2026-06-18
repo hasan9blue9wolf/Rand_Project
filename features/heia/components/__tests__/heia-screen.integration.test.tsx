@@ -82,7 +82,7 @@ describe("HeiaScreen AI integration", () => {
     renderWithProviders(<HeiaScreen />);
 
     fireEvent.changeText(
-      screen.getByPlaceholderText("Message Heia..."),
+      screen.getByPlaceholderText("Message Haya..."),
       "I want a polished island trip",
     );
     fireEvent.press(screen.getByLabelText("Send message"));
@@ -126,7 +126,7 @@ describe("HeiaScreen AI integration", () => {
     renderWithProviders(<HeiaScreen />);
 
     fireEvent.changeText(
-      screen.getByPlaceholderText("Message Heia..."),
+      screen.getByPlaceholderText("Message Haya..."),
       "شلون اكدر اطلب",
     );
     fireEvent.press(screen.getByLabelText("Send message"));
@@ -175,7 +175,7 @@ describe("HeiaScreen AI integration", () => {
     renderWithProviders(<HeiaScreen />);
 
     fireEvent.changeText(
-      screen.getByPlaceholderText("Message Heia..."),
+      screen.getByPlaceholderText("Message Haya..."),
       "اريد طوكيو",
     );
     fireEvent.press(screen.getByLabelText("Send message"));

@@ -284,8 +284,71 @@ const fallbackFollowUpQuestions = {
 const hasNoisyTokenPattern = (value) =>
   /(?:[23]D){3,}/i.test(value) || /[A-Za-z0-9_]{28,}/.test(value);
 
+const normalizeIraqiArabicText = (value) =>
+  [
+    [/أقدر/g, "أكدر"],
+    [/اقدر/g, "اكدر"],
+    [/تستطيعون/g, "تكدر"],
+    [/تستطيع/g, "تكدر"],
+    [/يمكنك/g, "تكدر"],
+    [/يمكننا/g, "نكدر"],
+    [/بإمكانك/g, "تكدر"],
+    [/بإمكاننا/g, "نكدر"],
+    [/وش/g, "شنو"],
+    [/إيش/g, "شنو"],
+    [/ايش/g, "شنو"],
+    [/(^|[\s،.؟!])شو(?=$|[\s،.؟!])/g, "$1شنو"],
+    [/أبغى/g, "أريد"],
+    [/ابغى/g, "أريد"],
+    [/عايز/g, "أريد"],
+    [/ودي/g, "أريد"],
+    [/الحين/g, "هسه"],
+    [/هلأ/g, "هسه"],
+    [/دلوقتي/g, "هسه"],
+    [/كتير/g, "هواية"],
+    [/منيح/g, "زين"],
+    [/يمديك/g, "تكدر"],
+    [/حياك/g, "هلا بيك"],
+    [/تقدرون/g, "تكدر"],
+    [/تكدرون/g, "تكدر"],
+    [/تريدون/g, "تريد"],
+    [/تحبون/g, "تحب"],
+    [/تعطوني/g, "تعطيني"],
+    [/أرتبلكم/g, "أرتبلك"],
+    [/ارتبلكم/g, "أرتبلك"],
+    [/إلكم/g, "إلك"],
+    [/لكم/g, "إلك"],
+    [/(^|[\s،.؟!])لك(?=$|[\s،.؟!])/g, "$1إلك"],
+    [/(^|[\s،.؟!])فيه(?=$|[\s،.؟!])/g, "$1بيه"],
+    [/(^|[\s،.؟!])فيها(?=$|[\s،.؟!])/g, "$1بيها"],
+    [/(^|[\s،.؟!])بها(?=$|[\s،.؟!])/g, "$1بيها"],
+    [/حسب طلبكم/g, "حسب طلبك"],
+    [/حسب رغبتكم/g, "حسب طلبك"],
+    [/حسب وصفكم/g, "حسب وصفك"],
+    [/(^|[\s،.؟!])أنا(?=$|[\s،.؟!])/g, "$1أني"],
+    [/(^|[\s،.؟!])انا(?=$|[\s،.؟!])/g, "$1أني"],
+    [/حبيبي/g, ""],
+    [/ستايل/g, "جو"],
+    [/جداً/g, "كلش"],
+    [/جدا/g, "كلش"],
+    [/(^|[\s،.؟!])ثم(?=$|[\s،.؟!])/g, "$1بعدين"],
+    [/إذا تعطيني إذا تفضل/g, "إذا تحدد"],
+    [/إذا تعطيني إذا/g, "إذا تعطيني"],
+  ]
+    .reduce(
+      (result, [pattern, replacement]) => result.replace(pattern, replacement),
+      value,
+    )
+    .replace(/\s+،/g, "،")
+    .replace(/،\s*،/g, "،")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+const normalizeTextForLocale = (value, locale) =>
+  locale === "ar" ? normalizeIraqiArabicText(value) : value;
+
 const cleanText = (value, fallback, maxLength, options = {}) => {
-  const { minLength = 1 } = options;
+  const { locale, minLength = 1 } = options;
   const trimmed = trimValue(value);
 
   if (
@@ -294,10 +357,10 @@ const cleanText = (value, fallback, maxLength, options = {}) => {
     trimmed.length > maxLength ||
     hasNoisyTokenPattern(trimmed)
   ) {
-    return fallback;
+    return normalizeTextForLocale(fallback, locale);
   }
 
-  return trimmed;
+  return normalizeTextForLocale(trimmed, locale);
 };
 
 const cleanQuickReplies = (quickReplies, fallbackReplies, locale) => {
@@ -320,7 +383,7 @@ const buildDefaultModelOutput = (requestData) => ({
   followUpQuestions: [fallbackFollowUpQuestions[requestData.locale][0]],
   guidanceText:
     requestData.locale === "ar"
-      ? "أنا جاهزة لبناء توصية سفر مصقولة. أحتاج فقط إلى إشارة أوضح عن الميزانية أو عدد المسافرين أو الطابع المطلوب."
+      ? "أني جاهزة أرتبلك توصية سفر مرتبة. أحتاج بس توضحلي الميزانية أو عدد المسافرين أو الجو اللي تريده."
       : "I’m ready to build a polished travel recommendation. I just need one clearer signal on budget, traveler count, or trip vibe.",
   includePackageRecommendation: false,
   packageId: "bali-signature",
@@ -484,7 +547,7 @@ const buildPromptInput = (requestData) => {
 };
 
 const instructions = `
-You are Heia, the travel concierge and sales advisor inside Haya Trip.
+You are Haya, the travel concierge and sales advisor inside Haya Trip.
 Return only structured data that matches the provided schema.
 Use the request locale: English for "en", Arabic for "ar". If the user writes Arabic, respond in Arabic.
 For English requests, every user-facing field must be English only. Do not include Arabic script or Iraqi phrases in English responses.
@@ -499,8 +562,20 @@ Always fill every schema field.
 Arabic voice:
 - These Arabic voice rules apply only when the request locale is "ar".
 - Hard product rule: the Arabic assistant is always speaking to one male app user. Never infer that the app user is plural or female from "احنا", honeymoon, family, kids, couples, partyComposition, or traveler count.
-- Use modern Iraqi-friendly Arabic in Arabic script: warm, clear, and premium.
-- Natural phrases are welcome when they fit: "تكدر", "شلون", "تريد", "أرتبلك", "حتى", "إذا تحب", "هسه".
+- Use widely understood Iraqi Arabic, closest to natural Baghdadi/central Iraqi speech, written in Arabic script: warm, clear, and premium.
+- Use Iraqi words and sentence rhythm when they fit: "شلون", "شنو", "شكو ماكو", "اكو", "ماكو", "هسه", "هواية", "زين", "خوش", "شكد", "وين", "شوقت", "تكدر", "أرتبلك", "إلك", "نثبت", "وياك".
+- Keep it polished and travel-advisor appropriate. Do not overdo slang, jokes, rural wording, or heavy phonetic spellings.
+- Do not use Saudi or generic Gulf wording such as "وش", "إيش", "أبغى", "ودي", "الحين", "مرة حلو", "يمديك", "تقدرون", or "حياك".
+- Avoid non-Iraqi dialect drift such as Levantine "شو", "هلأ", "كتير", "منيح" or Egyptian "عايز", "دلوقتي".
+- Prefer Iraqi alternatives: "شنو" not "إيش/شو", "هسه" not "الحين/هلأ", "أريد" not "أبغى/عايز", "هواية" not "مرة/كتير", "زين" not "منيح".
+- Prefer "أكدر", "تقدر", "تكدر", and "نكدر" over formal or non-Iraqi wording such as "أقدر", "تستطيع", "يمكنك", "بإمكانك", or "بإمكاننا".
+- When a first-person pronoun is needed, use "أني" or omit it. Do not use "أنا" or "انا" in assistant copy.
+- Use "الجو", "المزاج", or "الاتجاه" instead of loanwords such as "ستايل".
+- Hard forbidden Arabic user-facing terms: "أقدر", "اقدر", "تستطيع", "يمكنك", "بإمكانك", "بإمكاننا", "حبيبي", "أنا", "انا", "ستايل", "جدا", "جداً", "ثم".
+- Prefer Iraqi connectors and intensifiers: "بعدين" not "ثم", "كلش" or "هواية" not "جدا/جداً".
+- Prefer "بيه/بيها" and "إلك" over "فيه/فيها/بها" and "لك".
+- Avoid pet-name greetings such as "حبيبي"; keep the voice premium, respectful, and app-like.
+- Natural phrases are welcome when they fit: "تكدر", "شلون", "شنو", "تريد", "أرتبلك", "حتى", "إذا تحب", "هسه".
 - Every Arabic guidanceText must include at least one natural Iraqi action phrase such as "تكدر", "أرتبلك", "إذا تعطيني", "هسه", or "نكدر نثبت".
 - For Arabic package recommendations, end with a clear next step in this style: "إذا تعطيني التواريخ وعدد المسافرين، أرتبلك ملخص الحجز والخطوة الجاية."
 - Always address the app user as one male speaker in Arabic: "حسب طلبك", "إلك", "تريد", "تكدر", "إذا تعطيني", "أرتبلك".
@@ -517,6 +592,7 @@ Arabic voice:
 - Never output "Premium", "Priority booking", or "nights" in Arabic responses.
 - Use clean Iraqi grammar. Avoid malformed endings such as "نكملون" or typo-like blends such as "أنرتبلك"; say "نكمل الحجز", "أرتبلك", "نرتبلك", or "نثبت التفاصيل".
 - Keep phrases natural and literal. Avoid awkward expressions like "الهوس الغذائي", "يكّتب تأكيد", "يكّدر", "جوّه", "السببا", "للويكند" for long trips, or exaggerated sales language.
+- Avoid duplicate conditional phrasing such as "إذا تعطيني إذا تفضل"; ask the question directly instead.
 - Use plain text only. Do not use Markdown, asterisks, bold markers, bullet symbols, or decorative formatting.
 - packageSummary may be empty only when includePackageRecommendation=false. If includePackageRecommendation=true, write a real summary in the response locale.
 
@@ -585,7 +661,7 @@ const handleHeiaRequest = async (request, response) => {
   } catch {
     sendJson(response, 400, {
       code: "bad_request",
-      message: "Invalid Heia request body.",
+      message: "Invalid Haya request body.",
       ok: false,
       providerName: "local-heia-dev",
     });
@@ -665,6 +741,6 @@ createServer((request, response) => {
 
   void handleHeiaRequest(request, response);
 }).listen(PORT, "0.0.0.0", () => {
-  console.log(`Local Heia API listening on http://localhost:${PORT}/api/heia`);
+  console.log(`Local Haya API listening on http://localhost:${PORT}/api/heia`);
   console.log(`Using OpenAI model: ${model}`);
 });

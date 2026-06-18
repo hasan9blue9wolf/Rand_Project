@@ -52,7 +52,7 @@ export const createInitialAiAdvisorMessages = (
     text:
       locale === "ar"
         ? "أهلاً، أنا هيا. أخبرني عن الميزانية، عدد المسافرين، مدة الرحلة، الطابع الذي تريده، ومدينة المغادرة لأبني لك shortlist مدروساً."
-        : "Hi, I'm Heia. Tell me your budget, traveler count, trip length, desired vibe, and departure city and I'll build you a polished shortlist.",
+        : "Hi, I'm Haya. Tell me your budget, traveler count, trip length, desired vibe, and departure city and I'll build you a polished shortlist.",
   },
 ];
 

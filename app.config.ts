@@ -239,6 +239,16 @@ const sanitizeVersionCode = (value?: string | null) => {
   return 1;
 };
 
+const sanitizeHeiaProvider = (value?: string | null) => {
+  const normalized = trimValue(value);
+
+  return normalized === "direct-preview" ||
+    normalized === "mock" ||
+    normalized === "real"
+    ? normalized
+    : "mock";
+};
+
 const sanitizeTimeoutMs = (value?: string | null) => {
   const parsed = Number(value ?? "");
 
@@ -372,6 +382,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
     extra: {
       ...publicRuntimeConfig,
+      heiaProvider: sanitizeHeiaProvider(
+        process.env["EXPO_PUBLIC_HEIA_PROVIDER"],
+      ),
       ...(directPreviewOpenAiApiKey
         ? {
             heiaDirectPreviewModel:

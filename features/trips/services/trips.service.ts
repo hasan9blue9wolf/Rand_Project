@@ -21,7 +21,7 @@ const defaultProgressLabel = (status: TripListItem["status"]) => {
       return "Saved for later";
     case "planning":
     default:
-      return "Heia is shaping the plan";
+      return "Haya is shaping the plan";
   }
 };
 

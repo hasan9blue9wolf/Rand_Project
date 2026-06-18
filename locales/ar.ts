@@ -367,6 +367,7 @@ export const ar = {
     mic: "إدخال صوتي",
     reset: "إعادة تعيين",
     send: "إرسال الرسالة",
+    sendSelectedAnswers: "إرسال الإجابات المختارة",
     followUpTitle: "أسئلة لتحسين التطابق",
     estimatedBudget: "الميزانية التقديرية",
     durationLabel: "المدة",

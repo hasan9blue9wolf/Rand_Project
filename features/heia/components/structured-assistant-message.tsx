@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
@@ -8,6 +8,7 @@ import { DetailRow } from "../../../components/ui/detail-row";
 import { MetricChip } from "../../../components/ui/metric-chip";
 import { MotionView } from "../../../components/ui/motion-view";
 import { PackageCard } from "../../../components/ui/package-card";
+import { PrimaryButton } from "../../../components/ui/primary-button";
 import { ScalePressable } from "../../../components/ui/scale-pressable";
 import { useAppLanguage } from "../../../hooks/use-app-language";
 import { useLocalization } from "../../../hooks/use-localization";
@@ -50,56 +51,66 @@ const getFollowUpQuestionSetText = (
 
 const QuickReplyChip = memo(function QuickReplyChip({
   question,
+  selectedReplies,
   onPress,
 }: {
-  onPress: (quickReply: string) => void;
+  onPress: (question: AiAdvisorFollowUpQuestion, quickReply: string) => void;
   question: AiAdvisorFollowUpQuestion;
+  selectedReplies: string[];
 }) {
   return (
-  <View style={{ gap: spacing.sm }}>
-    <View style={{ gap: spacing.xxs }}>
-      <AppText variant="label">{question.question}</AppText>
-      {question.helpText ? (
-        <AppText color={colors.text.muted} variant="bodySmall">
-          {question.helpText}
-        </AppText>
-      ) : null}
-    </View>
-    <View
-      style={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: spacing.sm,
-      }}
-    >
-      {question.quickReplies.map((quickReply) => (
-        <ScalePressable
-          key={`${question.id}-${quickReply}`}
-          accessibilityRole="button"
-          contentStyle={{
-            alignItems: "center",
-            backgroundColor: colors.surface.base,
-            borderColor: colors.border.soft,
-            borderRadius: radius.round,
-            borderWidth: 1,
-            justifyContent: "center",
-            minHeight: 36,
-            paddingHorizontal: spacing.md,
-          }}
-          onPress={() => onPress(quickReply)}
-          scaleTo={0.97}
-          style={{ borderRadius: radius.round }}
-        >
-          <AppText
-            color={colors.text.secondary}
-            style={{ fontSize: 12, fontWeight: "600" }}
-          >
-            {quickReply}
+    <View style={{ gap: spacing.sm }}>
+      <View style={{ gap: spacing.xxs }}>
+        <AppText variant="label">{question.question}</AppText>
+        {question.helpText ? (
+          <AppText color={colors.text.muted} variant="bodySmall">
+            {question.helpText}
           </AppText>
-        </ScalePressable>
-      ))}
+        ) : null}
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          gap: spacing.sm,
+        }}
+      >
+        {question.quickReplies.map((quickReply) => {
+          const selected = selectedReplies.includes(quickReply);
+
+          return (
+            <ScalePressable
+              key={`${question.id}-${quickReply}`}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              contentStyle={{
+                alignItems: "center",
+                backgroundColor: selected
+                  ? colors.primary[50]
+                  : colors.surface.base,
+                borderColor: selected ? colors.primary[500] : colors.border.soft,
+                borderRadius: radius.round,
+                borderWidth: selected ? 1.5 : 1,
+                justifyContent: "center",
+                minHeight: 36,
+                paddingHorizontal: spacing.md,
+                paddingVertical: spacing.xs,
+              }}
+              onPress={() => onPress(question, quickReply)}
+              scaleTo={0.97}
+              style={{ borderRadius: radius.round }}
+            >
+              <AppText
+                color={selected ? colors.primary[700] : colors.text.secondary}
+                style={{ fontSize: 12, fontWeight: "600" }}
+              >
+                {quickReply}
+              </AppText>
+            </ScalePressable>
+          );
+        })}
+      </View>
     </View>
-  </View>
   );
 });
 
@@ -113,12 +124,58 @@ export const StructuredAssistantMessage = memo(function StructuredAssistantMessa
   const { isRTL } = useAppLanguage();
   const { formatCurrency } = useLocalization();
   const content = message.response;
+  const [selectedQuickReplies, setSelectedQuickReplies] = useState<
+    Record<string, string[]>
+  >({});
   const containerStyle = {
     alignSelf: isRTL ? "flex-end" : "flex-start",
     marginLeft: !isRTL && message.inset ? 44 : 0,
     marginRight: isRTL && message.inset ? 44 : 0,
     width: "84%",
   } as const;
+  const selectedResponseLines = useMemo(() => {
+    if (content.type !== "follow_up_question_set") {
+      return [];
+    }
+
+    return content.questions.flatMap((question) =>
+      (selectedQuickReplies[question.id] ?? []).map(
+        (quickReply) => `${question.question}: ${quickReply}`,
+      ),
+    );
+  }, [content, selectedQuickReplies]);
+  const selectedQuickReplyCount = selectedResponseLines.length;
+  const handleQuickReplyToggle = useCallback(
+    (question: AiAdvisorFollowUpQuestion, quickReply: string) => {
+      setSelectedQuickReplies((currentSelections) => {
+        const questionSelections = currentSelections[question.id] ?? [];
+        const nextQuestionSelections = questionSelections.includes(quickReply)
+          ? questionSelections.filter((selection) => selection !== quickReply)
+          : [...questionSelections, quickReply];
+
+        if (nextQuestionSelections.length === 0) {
+          const { [question.id]: _removed, ...remainingSelections } =
+            currentSelections;
+
+          return remainingSelections;
+        }
+
+        return {
+          ...currentSelections,
+          [question.id]: nextQuestionSelections,
+        };
+      });
+    },
+    [],
+  );
+  const handleQuickReplySubmit = useCallback(() => {
+    if (selectedResponseLines.length === 0) {
+      return;
+    }
+
+    onQuickReplyPress(selectedResponseLines.join("\n"));
+    setSelectedQuickReplies({});
+  }, [onQuickReplyPress, selectedResponseLines]);
 
   if (content.type === "destination_recommendation") {
     const packageId = content.packageId;
@@ -238,11 +295,20 @@ export const StructuredAssistantMessage = memo(function StructuredAssistantMessa
             {content.questions.map((question) => (
               <QuickReplyChip
                 key={question.id}
-                onPress={onQuickReplyPress}
+                onPress={handleQuickReplyToggle}
                 question={question}
+                selectedReplies={selectedQuickReplies[question.id] ?? []}
               />
             ))}
           </View>
+          <PrimaryButton
+            disabled={selectedQuickReplyCount === 0}
+            fullWidth
+            icon="send"
+            label={t("heiaChat.sendSelectedAnswers")}
+            onPress={handleQuickReplySubmit}
+            style={{ marginTop: spacing.lg }}
+          />
         </AppCard>
       </MotionView>
     );

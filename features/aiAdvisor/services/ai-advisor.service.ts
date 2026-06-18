@@ -1,3 +1,5 @@
+import Constants from "expo-constants";
+
 import { isDemoModeEnabled } from "../../../services/runtime/app-mode";
 import type {
   AiAdvisorProvider,
@@ -9,6 +11,7 @@ import {
   buildAiAdvisorStructuredContext,
   selectAiAdvisorPromptTemplate,
 } from "./ai-advisor.context";
+import { normalizeAiAdvisorResponsesForLocale } from "./ai-advisor.dialect";
 import {
   buildAiAdvisorFallbackResponses,
   buildAiAdvisorSafetyResponses,
@@ -33,11 +36,15 @@ const { EXPO_PUBLIC_HEIA_PROVIDER } = process.env as Record<
   string,
   string | undefined
 >;
+const expoExtra = (Constants.expoConfig?.extra ?? {}) as {
+  heiaProvider?: AiAdvisorProviderMode;
+};
 
 const resolveProvider = (
   providerMode?: AiAdvisorProviderMode,
 ): AiAdvisorProvider => {
-  const requestedProvider = providerMode ?? EXPO_PUBLIC_HEIA_PROVIDER;
+  const requestedProvider =
+    providerMode ?? expoExtra.heiaProvider ?? EXPO_PUBLIC_HEIA_PROVIDER;
 
   if (
     requestedProvider === "direct-preview" &&
@@ -110,11 +117,15 @@ export const requestAiAdvisorTurn = async ({
       templateId,
     });
     const parsedOutput = parseAiAdvisorProviderOutput(rawProviderOutput);
+    const responses = normalizeAiAdvisorResponsesForLocale(
+      parsedOutput.responses,
+      locale,
+    );
 
     return {
       memory,
       providerName: provider.name,
-      responses: parsedOutput.responses,
+      responses,
       usedFallback: false,
     };
   } catch {

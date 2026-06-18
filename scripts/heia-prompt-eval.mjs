@@ -372,7 +372,7 @@ const waitForServer = async () => {
     await wait(250);
   }
 
-  throw new Error("Timed out waiting for Heia eval server.");
+  throw new Error("Timed out waiting for Haya eval server.");
 };
 
 const createRequestBody = (testCase) => ({
@@ -444,6 +444,43 @@ const malformedArabicPatterns = [
   /للويكند/,
   /جوّه/,
   /تگضّون/,
+  /إذا تعطيني إذا/,
+  /ستايل/,
+];
+const nonIraqiArabicPatterns = [
+  /(?:^|\s)وش(?:\s|$)/,
+  /(?:^|\s)إيش(?:\s|$)/,
+  /(?:^|\s)ايش(?:\s|$)/,
+  /(?:^|\s)أبغى(?:\s|$)/,
+  /(?:^|\s)ابغى(?:\s|$)/,
+  /(?:^|\s)ودي(?:\s|$)/,
+  /(?:^|\s)الحين(?:\s|$)/,
+  /(?:^|\s)يمديك(?:\s|$)/,
+  /(?:^|\s)حياك(?:\s|$)/,
+  /(?:^|\s)شو(?:\s|$)/,
+  /(?:^|\s)هلأ(?:\s|$)/,
+  /(?:^|\s)كتير(?:\s|$)/,
+  /(?:^|\s)منيح(?:\s|$)/,
+  /(?:^|\s)عايز(?:\s|$)/,
+  /(?:^|\s)دلوقتي(?:\s|$)/,
+  /(?:^|\s)أقدر(?:\s|$)/,
+  /(?:^|\s)اقدر(?:\s|$)/,
+  /(?:^|\s)تستطيع(?:\s|$)/,
+  /(?:^|\s)تستطيعون(?:\s|$)/,
+  /(?:^|\s)يمكنك(?:\s|$)/,
+  /(?:^|\s)يمكننا(?:\s|$)/,
+  /(?:^|\s)بإمكانك(?:\s|$)/,
+  /(?:^|\s)بإمكاننا(?:\s|$)/,
+  /(?:^|\s)حبيبي(?:\s|$)/,
+  /(?:^|\s)أنا(?:\s|$)/,
+  /(?:^|\s)انا(?:\s|$)/,
+  /(?:^|\s)جدا(?:\s|$)/,
+  /(?:^|\s)جداً(?:\s|$)/,
+  /(?:^|\s)ثم(?:\s|$)/,
+  /(?:^|\s)لك(?:\s|$)/,
+  /(?:^|\s)فيه(?:\s|$)/,
+  /(?:^|\s)فيها(?:\s|$)/,
+  /(?:^|\s)بها(?:\s|$)/,
 ];
 const pluralUserAddressPatterns = [
   /حسب (?:طلبكم|رغبتكم|وصفكم|تفاصيلكم|كلامكم|تفضيلاتكم)/,
@@ -568,6 +605,14 @@ const scoreCase = (testCase, responseBody) => {
     }
 
     if (
+      nonIraqiArabicPatterns.some((pattern) =>
+        pattern.test(generatedTextBlob),
+      )
+    ) {
+      failures.push("Arabic output contains non-Iraqi dialect wording");
+    }
+
+    if (
       pluralUserAddressPatterns.some((pattern) =>
         pattern.test(generatedTextBlob),
       )
@@ -683,7 +728,7 @@ const run = async () => {
     }
 
     if (failureCount > 0) {
-      throw new Error(`Heia prompt eval failed with ${failureCount} issue(s).`);
+      throw new Error(`Haya prompt eval failed with ${failureCount} issue(s).`);
     }
   } finally {
     server.kill("SIGTERM");

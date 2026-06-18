@@ -346,7 +346,7 @@ export const DestinationDetailsScreen = () => {
           timelineTitle: "إيقاع الرحلة",
         }
       : {
-          askHeia: "Ask Heia",
+          askHeia: "Ask Haya",
           cta: "View package",
           routeTitle: "Destination details",
           stayTitle: "Stay and arrival",
