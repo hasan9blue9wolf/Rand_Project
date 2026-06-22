@@ -11,17 +11,19 @@ const packageJson = require("./package.json") as {
   version?: string;
 };
 
-const APP_NAME = "TravelGenious";
-const APP_SLUG = "travelgenious";
-const APP_SCHEME = "travelgenious";
-const APP_BUNDLE_IDENTIFIER = "com.travelgenious.app";
-const APP_PACKAGE_NAME = "com.travelgenious.app";
+const APP_NAME = "Haya Trip";
+const APP_SLUG = "hayatrip";
+const APP_SCHEME = "hayatrip";
+const APP_BUNDLE_IDENTIFIER = "com.hayatrip.app";
+const APP_PACKAGE_NAME = "com.hayatrip.app";
 const BRAND_BACKGROUND_COLOR = "#071528";
 const APP_BACKGROUND_COLOR = "#F6F9FC";
 const EAS_UPDATE_URL = process.env["EXPO_PUBLIC_EAS_UPDATE_URL"]?.trim();
-const DEFAULT_API_BASE_URL = "https://api.travelgenious.app";
+const DEFAULT_API_BASE_URL = "https://api.hayatrip.app";
 const DEFAULT_APP_ENV: AppEnvironment = "development";
 const DEFAULT_APP_MODE: AppMode = "demo";
+const DIRECT_PREVIEW_ENABLED =
+  process.env["HEIA_DIRECT_PREVIEW_ENABLED"] === "1";
 
 const trimValue = (value?: string | null) => value?.trim() ?? "";
 
@@ -237,6 +239,26 @@ const sanitizeVersionCode = (value?: string | null) => {
   return 1;
 };
 
+const sanitizeHeiaProvider = (value?: string | null) => {
+  const normalized = trimValue(value);
+
+  return normalized === "direct-preview" ||
+    normalized === "mock" ||
+    normalized === "real"
+    ? normalized
+    : "mock";
+};
+
+const sanitizeTimeoutMs = (value?: string | null) => {
+  const parsed = Number(value ?? "");
+
+  if (!Number.isFinite(parsed)) {
+    return 30_000;
+  }
+
+  return Math.min(30_000, Math.max(3_000, Math.trunc(parsed)));
+};
+
 const createVariantDisplayName = (variant: AppVariant) => {
   if (variant === "production") {
     return APP_NAME;
@@ -279,6 +301,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
   const androidVersionCode = sanitizeVersionCode(
     process.env["ANDROID_VERSION_CODE"],
   );
+  const directPreviewOpenAiApiKey = DIRECT_PREVIEW_ENABLED
+    ? trimValue(process.env["OPENAI_API_KEY"])
+    : "";
   const expoConfig: ExpoConfig = {
     ...config,
     name: displayName,
@@ -355,7 +380,23 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       output: "static",
       favicon: "./assets/favicon.png",
     },
-    extra: publicRuntimeConfig,
+    extra: {
+      ...publicRuntimeConfig,
+      heiaProvider: sanitizeHeiaProvider(
+        process.env["EXPO_PUBLIC_HEIA_PROVIDER"],
+      ),
+      ...(directPreviewOpenAiApiKey
+        ? {
+            heiaDirectPreviewModel:
+              trimValue(process.env["OPENAI_HEIA_MODEL"]) ||
+              "gpt-5.4-mini-2026-03-17",
+            heiaDirectPreviewOpenAiApiKey: directPreviewOpenAiApiKey,
+            heiaDirectPreviewTimeoutMs: sanitizeTimeoutMs(
+              process.env["OPENAI_HEIA_TIMEOUT_MS"],
+            ),
+          }
+        : {}),
+    },
   };
 
   if (validatedEasUpdateUrl) {

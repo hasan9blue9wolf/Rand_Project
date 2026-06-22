@@ -2,6 +2,7 @@ import { startTransition, useEffect, useRef, useState } from "react";
 
 import { useLocalization } from "../../../hooks/use-localization";
 import { selectActiveUserId, useAuthStore } from "../../../store/auth-store";
+import type { AppLocale } from "../../../types/i18n";
 import {
   aiAdvisorScreenMock,
   createInitialAiAdvisorMessages,
@@ -45,7 +46,14 @@ const createErrorStatusMessage = (
   title,
 });
 
-const mapResponsesToChatMessages = (responses: AiAdvisorStructuredResponse[]) =>
+const containsArabicText = (value: string) => /[\u0600-\u06FF]/.test(value);
+
+const resolveTurnLocale = (input: string, fallbackLocale: AppLocale) =>
+  containsArabicText(input) ? "ar" : fallbackLocale;
+
+const mapResponsesToChatMessages = (
+  responses: AiAdvisorStructuredResponse[],
+) =>
   responses.map((response, index) =>
     response.type === "plain_text_guidance"
       ? {
@@ -95,9 +103,11 @@ export const useAiAdvisorChat = () => {
   };
 
   const persistMessages = async ({
+    locale,
     messagesToPersist,
     titleSeed,
   }: {
+    locale: AppLocale;
     messagesToPersist: AiAdvisorChatMessage[];
     titleSeed: string;
   }) => {
@@ -108,7 +118,7 @@ export const useAiAdvisorChat = () => {
     try {
       if (!threadIdRef.current) {
         const thread = await createAiChatThread({
-          locale: language,
+          locale,
           title: titleSeed.slice(0, 72),
         });
 
@@ -141,6 +151,7 @@ export const useAiAdvisorChat = () => {
       return;
     }
 
+    const turnLocale = resolveTurnLocale(trimmed, language);
     const baseMessages = messagesRef.current.filter(
       (message) => message.kind !== "status",
     );
@@ -170,7 +181,7 @@ export const useAiAdvisorChat = () => {
       const turnResult = await requestAiAdvisorTurn({
         history: workingHistory,
         latestUserMessage: trimmed,
-        locale: language,
+        locale: turnLocale,
         ...(memoryRef.current ? { previousMemory: memoryRef.current } : {}),
       });
       const assistantMessages = mapResponsesToChatMessages(
@@ -188,6 +199,7 @@ export const useAiAdvisorChat = () => {
         setMessages(nextMessages);
       });
       void persistMessages({
+        locale: turnLocale,
         messagesToPersist,
         titleSeed: trimmed,
       });
@@ -207,6 +219,7 @@ export const useAiAdvisorChat = () => {
         setMessages(nextMessages);
       });
       void persistMessages({
+        locale: turnLocale,
         messagesToPersist,
         titleSeed: trimmed,
       });

@@ -20,7 +20,7 @@ const faqEntries = [
   {
     answer: {
       ar: "يمكنك البدء من هيا أو شاشة النتائج أو العروض. عند اقترابك من الحجز، ستنتقل تلقائياً إلى تفاصيل الرحلة والدفع.",
-      en: "You can begin in Heia, Search Results, or Offers. As you get closer to booking, the flow naturally moves into trip details and checkout.",
+      en: "You can begin in Haya, Search Results, or Offers. As you get closer to booking, the flow naturally moves into trip details and checkout.",
     },
     question: {
       ar: "كيف أبدأ التخطيط داخل التطبيق؟",
@@ -75,7 +75,7 @@ export const HelpSupportScreen = () => {
           heroBadge: "Fast premium support",
           heroBody: "This screen brings together practical help entry points, quick questions, and review links for important launch states.",
           heroTitle: "Help and support",
-          noResults: "No matching topic showed up. Try a simpler phrase or open Heia to start the conversation.",
+          noResults: "No matching topic showed up. Try a simpler phrase or open Haya to start the conversation.",
           previewBody: "Quick links for reviewing Empty, Error, and Offline states during launch prep.",
           previewTitle: "State previews",
           searchPlaceholder: "Search a question or topic",
@@ -130,7 +130,7 @@ export const HelpSupportScreen = () => {
           {
             icon: "chatbubble-ellipses-outline",
             label:
-              language === "ar" ? "هيا كطبقة دعم أولى" : "Heia as first-line help",
+              language === "ar" ? "هيا كطبقة دعم أولى" : "Haya as first-line help",
           },
           {
             icon: "shield-checkmark-outline",
@@ -184,7 +184,7 @@ export const HelpSupportScreen = () => {
         <View style={{ gap: spacing.sm, marginTop: spacing.md }}>
           <AppText variant="bodySmall">{copy.channelsBody}</AppText>
           <SecondaryButton
-            label={language === "ar" ? "افتح هيا" : "Open Heia"}
+            label={language === "ar" ? "افتح هيا" : "Open Haya"}
             onPress={() => router.push(appRoutes.heia)}
             tone="coral"
           />

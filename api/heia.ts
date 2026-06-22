@@ -25,7 +25,7 @@ export const config = {
   runtime: "edge",
 };
 
-const HEIA_PROVIDER_NAME = "travelgenious-heia";
+const HEIA_PROVIDER_NAME = "hayatrip-heia";
 
 const sleep = (timeoutMs: number) =>
   new Promise((resolve) => setTimeout(resolve, timeoutMs));
@@ -246,7 +246,7 @@ export default async function handler(request: Request): Promise<Response> {
       message:
         requestData.locale === "ar"
           ? "خدمة هيا غير متاحة حالياً. أعرض لك بديلاً آمناً مؤقتاً."
-          : "Heia is temporarily unavailable. Returning a safe fallback for now.",
+          : "Haya is temporarily unavailable. Returning a safe fallback for now.",
       requestId,
       status: 503,
     });
@@ -305,7 +305,7 @@ export default async function handler(request: Request): Promise<Response> {
       message:
         requestData.locale === "ar"
           ? "تعذر الوصول إلى هيا حالياً. أعرض لك بديلاً آمناً ومفيداً مؤقتاً."
-          : "Heia is unavailable right now. Returning a safe fallback instead.",
+          : "Haya is unavailable right now. Returning a safe fallback instead.",
       requestId,
       status: status === 429 ? 429 : 503,
       ...(status === 429

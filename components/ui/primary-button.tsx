@@ -75,19 +75,6 @@ export const PrimaryButton = ({
           },
         ]}
       >
-        <View
-          pointerEvents="none"
-          style={{
-            backgroundColor: "rgba(255,255,255,0.14)",
-            borderRadius: radius.round,
-            height: 46,
-            left: 8,
-            opacity: 0.75,
-            position: "absolute",
-            top: 6,
-            width: "48%",
-          }}
-        />
         {loading ? (
           <ActivityIndicator color={colors.text.inverse} />
         ) : (

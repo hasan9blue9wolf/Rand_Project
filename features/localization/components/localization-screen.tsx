@@ -182,8 +182,8 @@ export const LocalizationScreen = () => {
           </AppText>
           <AppText color={colors.text.blue} variant="bodySmall">
             {language === "ar"
-              ? "تم تصميم هذه الشاشة لتبدو وكأنها امتداد طبيعي لأسلوب Home وHeia."
-              : "This screen is intentionally styled to feel like a natural extension of Home and Heia."}
+              ? "تم تصميم هذه الشاشة لتبدو وكأنها امتداد طبيعي لأسلوب Home وHaya."
+              : "This screen is intentionally styled to feel like a natural extension of Home and Haya."}
           </AppText>
         </View>
       </AppCard>

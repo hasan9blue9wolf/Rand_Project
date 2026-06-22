@@ -80,7 +80,7 @@ const tripNarratives = {
     },
   },
   "trip-2": {
-    badge: { ar: "قيد الضبط مع هيا", en: "Heia is refining it" },
+    badge: { ar: "قيد الضبط مع هيا", en: "Haya is refining it" },
     checklist: {
       ar: ["اعتماد الرحلات", "تأكيد الفندق", "إقفال جدول الاجتماعات"],
       en: [

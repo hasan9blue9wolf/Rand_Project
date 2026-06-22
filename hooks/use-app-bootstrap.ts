@@ -6,7 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 
 import { bootstrapDemoAuthSession } from "../features/auth/services/demo-auth.service";
 import {
-  cancelTravelgeniousScheduledNotificationsAsync,
+  cancelHayaTripScheduledNotificationsAsync,
   getNotificationPermissionStateAsync,
   syncLocalTravelNotificationsAsync,
 } from "../features/notifications/services/expo-notifications.service";
@@ -57,7 +57,7 @@ export const useAppBootstrap = () => {
 
     const bootstrap = async () => {
       try {
-        const bootstrapTasks: Array<Promise<unknown>> = [
+        const bootstrapTasks: Promise<unknown>[] = [
           i18n.changeLanguage(language),
           syncRTLDirection(language),
         ];
@@ -112,7 +112,7 @@ export const useAppBootstrap = () => {
         setNotificationPermissionStatus(permissionStatus);
 
         if (!notificationsEnabled || permissionStatus !== "granted") {
-          await cancelTravelgeniousScheduledNotificationsAsync();
+          await cancelHayaTripScheduledNotificationsAsync();
           return;
         }
 

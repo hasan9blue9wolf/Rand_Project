@@ -36,7 +36,7 @@ export const useDemoModeStore = create<DemoModeState>()(
       setTravelPreferences: (travelPreferences) => set({ travelPreferences }),
     }),
     {
-      name: "travelgenious-demo-mode",
+      name: "hayatrip-demo-mode",
       storage: appStorage,
     },
   ),

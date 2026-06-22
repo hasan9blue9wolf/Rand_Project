@@ -32,7 +32,7 @@ describe("HeiaScreen", () => {
           role: "assistant",
           showAvatar: true,
           suggestionIds: ["beach", "budget", "family", "surprise"],
-          text: "Hi, I'm Heia. Tell me what kind of trip you want.",
+          text: "Hi, I'm Haya. Tell me what kind of trip you want.",
         },
         {
           id: "user-1",
@@ -52,7 +52,7 @@ describe("HeiaScreen", () => {
     renderWithProviders(<HeiaScreen />);
 
     expect(
-      screen.getByText("Hi, I'm Heia. Tell me what kind of trip you want."),
+      screen.getByText("Hi, I'm Haya. Tell me what kind of trip you want."),
     ).toBeTruthy();
     expect(screen.getByText("Beach getaway")).toBeTruthy();
     expect(
@@ -71,5 +71,59 @@ describe("HeiaScreen", () => {
       maxToRenderPerBatch: 6,
       windowSize: 10,
     });
+  });
+
+  it("batches follow-up quick replies until the card send action is pressed", () => {
+    const sendQuickReply = jest.fn();
+
+    mockUseAiAdvisorChat.mockReturnValue({
+      assistantAvatarUri: "https://example.com/heia.png",
+      draft: "",
+      isLoading: false,
+      messages: [
+        {
+          id: "assistant-follow-up",
+          inset: true,
+          kind: "assistant_response",
+          response: {
+            id: "follow-up-1",
+            intro: "Answer these quick prompts and I can sharpen the shortlist.",
+            questions: [
+              {
+                id: "budget",
+                question: "What budget ceiling feels comfortable?",
+                quickReplies: ["Up to $2,500", "$2,500-$4,500"],
+              },
+              {
+                id: "departure",
+                question: "Where will you depart from?",
+                quickReplies: ["Baghdad", "Dubai"],
+              },
+            ],
+            type: "follow_up_question_set",
+          },
+          role: "assistant",
+        },
+      ],
+      resetConversation: jest.fn(),
+      retryLastTurn: jest.fn(),
+      sendDraft: jest.fn(),
+      sendQuickReply,
+      sendSuggestion: jest.fn(),
+      setDraft: jest.fn(),
+    });
+
+    renderWithProviders(<HeiaScreen />);
+
+    fireEvent.press(screen.getByText("$2,500-$4,500"));
+    fireEvent.press(screen.getByText("Baghdad"));
+
+    expect(sendQuickReply).not.toHaveBeenCalled();
+
+    fireEvent.press(screen.getByText("Send selected answers"));
+
+    expect(sendQuickReply).toHaveBeenCalledWith(
+      "What budget ceiling feels comfortable?: $2,500-$4,500\nWhere will you depart from?: Baghdad",
+    );
   });
 });

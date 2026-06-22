@@ -19,7 +19,7 @@ export const flightsScreenMock: FlightsScreenData = {
       id: "flight-tokyo-001",
       price: 2440,
       route: "LAX -> HND",
-      tags: ["Heia match", "High value"],
+      tags: ["Haya match", "High value"],
     },
   ],
   search: {

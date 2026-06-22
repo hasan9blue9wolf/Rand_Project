@@ -1,7 +1,7 @@
 export const en = {
   common: {
-    appName: "TravelGenious",
-    heia: "Heia",
+    appName: "Haya Trip",
+    heia: "Haya",
     back: "Back",
     search: "Search",
     settings: "Settings",
@@ -21,7 +21,7 @@ export const en = {
   },
   tabs: {
     home: "Home",
-    heia: "Heia AI",
+    heia: "Haya AI",
     trips: "My Trips",
     offers: "Offers",
     profile: "Profile",
@@ -43,11 +43,11 @@ export const en = {
     featuredTitle: "Featured offers",
     heiaCardTitle: "Need a sharper recommendation?",
     heiaCardBody:
-      "Heia blends your preferences, budget, and timing into concierge-level travel suggestions.",
-    heiaCardCta: "Open Heia",
+      "Haya blends your preferences, budget, and timing into concierge-level travel suggestions.",
+    heiaCardCta: "Open Haya",
     trustedPricing: "Trusted pricing",
     luxuryCuration: "Luxury curation",
-    heiaReady: "Heia ready",
+    heiaReady: "Haya ready",
     booking: {
       modes: {
         flights: "Book Flights",
@@ -76,9 +76,9 @@ export const en = {
       ctaPackages: "Search Packages",
     },
     heiaBanner: {
-      kicker: "Heia AI Assistant",
+      kicker: "Haya AI Assistant",
       title: "Not sure where to go?",
-      subtitle: "Chat with Heia, your AI Travel Advisor.",
+      subtitle: "Chat with Haya, your AI Travel Advisor.",
       cta: "Start Planning",
     },
     trendingPackages: {
@@ -117,7 +117,7 @@ export const en = {
     subtitle: "Premium matches curated from your latest search.",
     summaryTitle: "Your search snapshot",
     summaryBody:
-      "Heia found hand-picked flight and stay combinations designed for a smooth premium booking flow.",
+      "Haya found hand-picked flight and stay combinations designed for a smooth premium booking flow.",
     matchCount: "{{count}} curated packages",
     clearFilters: "Clear filters",
     criteria: {
@@ -226,7 +226,7 @@ export const en = {
     flexibleBody:
       "Concierge support and flexible adjustments stay available until checkout is complete.",
     reserveFlights: "Review booking summary",
-    askHeia: "Ask Heia",
+    askHeia: "Ask Haya",
     saveDestinationCta: "Save destination",
     savedDestinationCta: "Saved destination",
   },
@@ -243,7 +243,7 @@ export const en = {
         time: "Tomorrow",
       },
       aiPrompt: {
-        title: "Heia wants one more detail",
+        title: "Haya wants one more detail",
         body: "A quick budget update could sharpen the Milan shortlist and improve timing.",
         time: "Just now",
       },
@@ -270,8 +270,8 @@ export const en = {
       body: "{{destination}} begins {{date}}. Review flights, stay, and private transfers.",
     },
     aiPrompt: {
-      title: "Heia has a sharper shortlist",
-      body: "Ask Heia to refine {{destination}} for {{travelers}} travelers across {{duration}} days.",
+      title: "Haya has a sharper shortlist",
+      body: "Ask Haya to refine {{destination}} for {{travelers}} travelers across {{duration}} days.",
     },
     savedOfferAlert: {
       title: "{{destination}} is still looking strong",
@@ -289,7 +289,7 @@ export const en = {
   trips: {
     title: "My trips",
     subtitle:
-      "Track confirmed travel, premium holds, and journeys Heia is still shaping.",
+      "Track confirmed travel, premium holds, and journeys Haya is still shaping.",
     confirmed: "Confirmed",
     planning: "Planning",
     wishlist: "Wishlist",
@@ -330,7 +330,7 @@ export const en = {
   },
   checkout: {
     title: "Checkout",
-    subtitle: "Final review before TravelGenious confirms your booking.",
+    subtitle: "Final review before Haya Trip confirms your booking.",
     summaryTitle: "Trip total",
     paymentTitle: "Payment method",
     securePaymentLabel: "Payment status",
@@ -346,32 +346,33 @@ export const en = {
     successEyebrow: "Booking confirmed",
     successTitle: "Your investor-demo booking is fully staged.",
     successBody:
-      "TravelGenious has locked the itinerary, queued the concierge brief, and prepared the next premium follow-up.",
+      "Haya Trip has locked the itinerary, queued the concierge brief, and prepared the next premium follow-up.",
     bookingReference: "Booking reference",
     deliveryEta: "Delivery timing",
     deliveryEtaValue: "Confirmation in under a minute",
     conciergeTitle: "Concierge follow-up",
     conciergeBody:
-      "Heia can now refine packing notes, airport timing, and day-by-day suggestions around this trip.",
+      "Haya can now refine packing notes, airport timing, and day-by-day suggestions around this trip.",
     tripsCta: "View my trips",
-    heiaCta: "Ask Heia to refine it",
+    heiaCta: "Ask Haya to refine it",
   },
   heiaChat: {
-    title: "Heia - TravelGenious Advisor",
+    title: "Haya - Haya Trip Advisor",
     subtitle:
       "Ask about destinations, timing, budget, or the style of trip you want.",
-    promptPlaceholder: "Message Heia...",
+    promptPlaceholder: "Message Haya...",
     disclaimer: "AI can make mistakes. Verify travel details before booking.",
-    thinkingTitle: "Heia is refining the shortlist",
+    thinkingTitle: "Haya is refining the shortlist",
     thinkingBody:
       "Checking fit across budget, trip length, weather, visa ease, and departure city.",
-    errorTitle: "Heia needs another pass",
+    errorTitle: "Haya needs another pass",
     errorBody:
-      "A temporary issue interrupted the recommendation. Retry and Heia will rebuild the plan.",
-    promptTitle: "Heia prompts",
+      "A temporary issue interrupted the recommendation. Retry and Haya will rebuild the plan.",
+    promptTitle: "Haya prompts",
     mic: "Voice input",
     reset: "Reset",
     send: "Send message",
+    sendSelectedAnswers: "Send selected answers",
     followUpTitle: "Questions to sharpen the fit",
     estimatedBudget: "Estimated budget",
     durationLabel: "Duration",
@@ -381,10 +382,10 @@ export const en = {
     luxuryLabel: "Luxury",
     whyItFits: "Why it fits",
     welcome:
-      "Hi! I'm Heia. Tell me a bit about what you're looking for — are you craving a relaxing beach vibe, an adventurous mountain trek, or a cultural city tour?",
+      "Hi! I'm Haya. Tell me a bit about what you're looking for — are you craving a relaxing beach vibe, an adventurous mountain trek, or a cultural city tour?",
     messages: {
       welcome:
-        "Hi! I'm Heia. Tell me a bit about what you're looking for — are you craving a relaxing beach vibe, an adventurous mountain trek, or a cultural city tour?",
+        "Hi! I'm Haya. Tell me a bit about what you're looking for — are you craving a relaxing beach vibe, an adventurous mountain trek, or a cultural city tour?",
       reply:
         'I can narrow that down for you. I’d compare timing, flight value, and hotel areas for "{{query}}" next.',
     },
@@ -410,15 +411,15 @@ export const en = {
       kicker: "Private planning, refined from the first tap",
       badges: {
         concierge: "Concierge-grade curation",
-        heia: "Heia AI guidance",
+        heia: "Haya AI guidance",
         flexible: "Flexible premium flows",
       },
     },
     welcome: {
       heroTitle: "Travel planning that feels composed from the start.",
       heroSubtitle:
-        "Step into TravelGenious with elegant booking tools, polished AI guidance, and a profile tuned to your travel taste.",
-      title: "Welcome to TravelGenious",
+        "Step into Haya Trip with elegant booking tools, polished AI guidance, and a profile tuned to your travel taste.",
+      title: "Welcome to Haya Trip",
       subtitle:
         "Choose how you want to enter. We can set up a full account, keep things light with guest mode, or help you pick up where you left off.",
       signInCta: "Sign in",
@@ -427,11 +428,11 @@ export const en = {
     authenticated: {
       heroTitle: "Welcome back, {{name}}.",
       heroSubtitle:
-        "Your account is ready. Continue into the app or refine the travel profile Heia uses to personalize every recommendation.",
+        "Your account is ready. Continue into the app or refine the travel profile Haya uses to personalize every recommendation.",
       title: "You are already signed in",
       subtitle:
-        "We kept your premium access warm. Continue to TravelGenious or revisit your preferences before your next trip.",
-      continueCta: "Enter TravelGenious",
+        "We kept your premium access warm. Continue to Haya Trip or revisit your preferences before your next trip.",
+      continueCta: "Enter Haya Trip",
       refineCta: "Refine preferences",
       signOutCta: "Sign out",
     },
@@ -442,7 +443,7 @@ export const en = {
       tabLabel: "Sign in",
       title: "Sign in",
       subtitle:
-        "Access your saved trips, Heia history, and premium travel preferences.",
+        "Access your saved trips, Haya history, and premium travel preferences.",
       forgotPasswordCta: "Forgot password?",
       primaryCta: "Continue securely",
     },
@@ -453,7 +454,7 @@ export const en = {
       tabLabel: "Sign up",
       title: "Create your account",
       subtitle:
-        "We will personalize TravelGenious around your taste the moment you finish setup.",
+        "We will personalize Haya Trip around your taste the moment you finish setup.",
       primaryCta: "Create account",
     },
     forgotPassword: {
@@ -478,7 +479,7 @@ export const en = {
     guest: {
       title: "Prefer to explore first?",
       subtitle:
-        "Continue in guest mode and still tell Heia what kind of travel experiences you prefer.",
+        "Continue in guest mode and still tell Haya what kind of travel experiences you prefer.",
       cta: "Continue as guest",
       resumeCta: "Continue as guest",
     },
@@ -488,7 +489,7 @@ export const en = {
     fields: {
       firstName: {
         label: "First name",
-        placeholder: "How should Heia greet you?",
+        placeholder: "How should Haya greet you?",
       },
       email: {
         label: "Email",
@@ -512,9 +513,9 @@ export const en = {
       },
     },
     onboarding: {
-      heroTitle: "Let’s tune TravelGenious to your travel taste.",
+      heroTitle: "Let’s tune Haya Trip to your travel taste.",
       heroSubtitle:
-        "These preferences help Heia ask sharper follow-up questions and return recommendations that already feel close to right.",
+        "These preferences help Haya ask sharper follow-up questions and return recommendations that already feel close to right.",
       progressLabel: "Preference setup",
       stepCounter: "Step {{current}} of {{total}}",
       nextCta: "Next",
@@ -522,7 +523,7 @@ export const en = {
       finishCta: "Complete setup",
       syncTitle: "Your account will stay in sync",
       syncSubtitle:
-        "These preferences will be saved to your profile so Heia and booking flows feel more personal every time you return.",
+        "These preferences will be saved to your profile so Haya and booking flows feel more personal every time you return.",
       guestModeTitle: "Guest mode is active",
       guestModeSubtitle:
         "We will keep these preferences on this device while you explore. You can create an account later without losing the overall direction.",
@@ -540,7 +541,7 @@ export const en = {
         language: {
           title: "Choose your language",
           description:
-            "We will use this for navigation, Heia responses, and future travel communications.",
+            "We will use this for navigation, Haya responses, and future travel communications.",
         },
         traveler: {
           title: "Shape your traveler profile",
@@ -643,7 +644,7 @@ export const en = {
     title: "Profile & preferences",
     subtitle: "Adjust language, trip preferences, and trusted travel settings.",
     memberSince: "Member since {{year}}",
-    membershipTitle: "TravelGenious Elite",
+    membershipTitle: "Haya Trip Elite",
     premiumTier: "Signature traveller",
     rtlNote:
       "Switching between English and Arabic updates the layout direction.",
@@ -661,9 +662,9 @@ export const en = {
     languageTitle: "Language",
     notificationsTitle: "Notifications",
     notificationsBody:
-      "Elegant reminders for departures, Heia prompts, offer shifts, and premium trip milestones.",
+      "Elegant reminders for departures, Haya prompts, offer shifts, and premium trip milestones.",
     notificationsHelp:
-      "Allow TravelGenious to surface calm local alerts on this device.",
+      "Allow Haya Trip to surface calm local alerts on this device.",
     notificationsSwitchTitle: "VIP travel notifications",
     notificationsPermissionBody:
       "System permission is still needed before reminders can appear on this device.",
@@ -680,15 +681,15 @@ export const en = {
     openSystemSettings: "Open system settings",
     preferencesTitle: "Reminder preferences",
     preferencesBody:
-      "Choose which premium reminders TravelGenious should prepare locally.",
+      "Choose which premium reminders Haya Trip should prepare locally.",
     preferenceLabels: {
       tripReminder: {
         title: "Trip reminders",
         body: "Departure-focused reminders for your next confirmed or planned journey.",
       },
       aiPrompt: {
-        title: "Heia prompts",
-        body: "Smart nudges when Heia can improve timing, fit, or destination options.",
+        title: "Haya prompts",
+        body: "Smart nudges when Haya can improve timing, fit, or destination options.",
       },
       savedOfferAlert: {
         title: "Saved offer alerts",
@@ -709,12 +710,12 @@ export const en = {
     scheduledSummary_one: "{{count}} local reminder prepared",
     scheduledSummary_other: "{{count}} local reminders prepared",
     scheduleEmpty:
-      "No reminders are currently queued. Turn on a few categories and TravelGenious will prepare them.",
+      "No reminders are currently queued. Turn on a few categories and Haya Trip will prepare them.",
     schedulePending:
       "Reminder scheduling will populate here after permissions are available.",
     notificationKinds: {
       tripReminder: "Trip reminder",
-      aiPrompt: "Heia prompt",
+      aiPrompt: "Haya prompt",
       savedOfferAlert: "Saved offer alert",
       bookingMilestone: "Booking milestone",
       travelChecklist: "Travel checklist",
@@ -814,7 +815,7 @@ export const en = {
         title: "Milan Design Circuit",
         destination: "Milan, Italy",
         dateRange: "May 04 - May 10",
-        progressLabel: "Heia is optimizing flights",
+        progressLabel: "Haya is optimizing flights",
       },
       "trip-3": {
         title: "Kyoto Autumn Journey",

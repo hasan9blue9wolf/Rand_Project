@@ -8,9 +8,9 @@ import { useAppLanguage } from "../../../hooks/use-app-language";
 import { useLocalization } from "../../../hooks/use-localization";
 import { useSettingsStore } from "../../../store/settings-store";
 import {
-  cancelTravelgeniousScheduledNotificationsAsync,
+  cancelHayaTripScheduledNotificationsAsync,
+  getHayaTripScheduledNotificationsAsync,
   getNotificationCapabilitySnapshotAsync,
-  getTravelgeniousScheduledNotificationsAsync,
   requestLocalNotificationPermissionsAsync,
   syncLocalTravelNotificationsAsync,
 } from "../../notifications/services/expo-notifications.service";
@@ -45,7 +45,7 @@ export const useSettingsScreen = () => {
   });
   const scheduledNotificationsQuery = useQuery({
     queryKey: queryKeys.notificationsScheduled,
-    queryFn: getTravelgeniousScheduledNotificationsAsync,
+    queryFn: getHayaTripScheduledNotificationsAsync,
   });
   const screenData = settingsQuery.data ?? settingsScreenMock;
   const { formatDate, t } = useLocalization();
@@ -128,7 +128,7 @@ export const useSettingsScreen = () => {
       try {
         if (!nextValue) {
           setNotificationsEnabled(false);
-          await cancelTravelgeniousScheduledNotificationsAsync();
+          await cancelHayaTripScheduledNotificationsAsync();
           return;
         }
 
@@ -139,7 +139,7 @@ export const useSettingsScreen = () => {
 
         if (permissionsStatus !== "granted") {
           setNotificationsEnabled(true);
-          await cancelTravelgeniousScheduledNotificationsAsync();
+          await cancelHayaTripScheduledNotificationsAsync();
           return;
         }
 

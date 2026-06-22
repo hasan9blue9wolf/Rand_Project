@@ -170,7 +170,7 @@ export const HeiaScreen = () => {
               alignSelf: "center",
               gap: spacing.lg,
               maxWidth: contentMaxWidth,
-              paddingBottom: spacing.xl,
+              paddingBottom: spacing.lg,
               paddingHorizontal: screenPadding,
               paddingTop: spacing.lg,
               width: "100%",
@@ -183,6 +183,8 @@ export const HeiaScreen = () => {
               Platform.OS === "ios" ? "interactive" : "on-drag"
             }
             maxToRenderPerBatch={6}
+            onContentSizeChange={() => scrollToBottom(hasMountedRef.current)}
+            onLayout={() => scrollToBottom(false)}
             ref={scrollRef}
             removeClippedSubviews={Platform.OS === "android"}
             renderItem={renderMessage}

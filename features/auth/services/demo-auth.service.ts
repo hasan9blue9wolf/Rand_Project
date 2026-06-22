@@ -106,7 +106,7 @@ export const signInWithDemoSocialProvider = async (
 
   const providerLabel = provider === "apple" ? "apple" : "google";
   const session = createDemoSession({
-    email: `${providerLabel}.traveler@travelgenious.demo`,
+    email: `${providerLabel}.traveler@hayatrip.demo`,
     firstName: provider === "apple" ? "Nora" : "Layla",
   });
 

@@ -222,37 +222,51 @@ export const BottomTabBar = ({
             borderRadius: radius.xl,
             borderWidth: 1,
             maxWidth,
-            overflow: "hidden",
+            overflow: "visible",
             paddingHorizontal: spacing.sm,
             paddingTop: spacing.xs,
+            position: "relative",
             width: "100%",
           },
         ]}
       >
-        <LinearGradient
-          colors={["rgba(255,255,255,0.96)", "rgba(246,249,252,0.98)"]}
-          end={{ x: 1, y: 1 }}
-          start={{ x: 0, y: 0 }}
+        <View
+          pointerEvents="none"
           style={{
             bottom: 0,
             left: 0,
+            borderRadius: radius.xl,
+            overflow: "hidden",
             position: "absolute",
             right: 0,
             top: 0,
           }}
-        />
-        <View
-          style={{
-            backgroundColor: "rgba(255,255,255,0.82)",
-            borderRadius: radius.round,
-            height: 1,
-            left: spacing.lg,
-            opacity: 0.85,
-            position: "absolute",
-            right: spacing.lg,
-            top: 0,
-          }}
-        />
+        >
+          <LinearGradient
+            colors={["rgba(255,255,255,0.96)", "rgba(246,249,252,0.98)"]}
+            end={{ x: 1, y: 1 }}
+            start={{ x: 0, y: 0 }}
+            style={{
+              bottom: 0,
+              left: 0,
+              position: "absolute",
+              right: 0,
+              top: 0,
+            }}
+          />
+          <View
+            style={{
+              backgroundColor: "rgba(255,255,255,0.82)",
+              borderRadius: radius.round,
+              height: 1,
+              left: spacing.lg,
+              opacity: 0.85,
+              position: "absolute",
+              right: spacing.lg,
+              top: 0,
+            }}
+          />
+        </View>
         <View
           style={{
             alignItems: "flex-end",

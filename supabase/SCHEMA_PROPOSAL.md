@@ -1,4 +1,4 @@
-# TravelGenious Supabase Schema Proposal
+# Haya Trip Supabase Schema Proposal
 
 This schema is designed for a client-safe Expo app using Supabase Auth with Row Level Security enabled on all app tables.
 
@@ -47,4 +47,4 @@ This schema is designed for a client-safe Expo app using Supabase Auth with Row 
 ## Files
 
 - Full schema snapshot: [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql)
-- Initial migration: [20260327090000_initial_travelgenious.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_travelgenious.sql)
+- Initial migration: [20260327090000_initial_hayatrip.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_hayatrip.sql)

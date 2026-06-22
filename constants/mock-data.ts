@@ -81,7 +81,7 @@ export const upcomingTrips: Trip[] = [
     endDate: "2026-05-10",
     status: "planning",
     startDate: "2026-05-04",
-    progressLabel: "Heia is optimizing flights",
+    progressLabel: "Haya is optimizing flights",
     travelers: 1,
   },
   {

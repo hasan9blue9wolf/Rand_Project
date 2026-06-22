@@ -12,17 +12,17 @@ type HeiaRateLimitResult = {
 type HeiaRateLimitStore = Map<string, HeiaRateLimitBucket>;
 
 type HeiaRateLimitGlobals = typeof globalThis & {
-  __travelgeniousHeiaRateLimitStore?: HeiaRateLimitStore;
+  __hayatripHeiaRateLimitStore?: HeiaRateLimitStore;
 };
 
 const RATE_LIMIT_GLOBALS = globalThis as HeiaRateLimitGlobals;
 
 const getStore = (): HeiaRateLimitStore => {
-  if (!RATE_LIMIT_GLOBALS.__travelgeniousHeiaRateLimitStore) {
-    RATE_LIMIT_GLOBALS.__travelgeniousHeiaRateLimitStore = new Map();
+  if (!RATE_LIMIT_GLOBALS.__hayatripHeiaRateLimitStore) {
+    RATE_LIMIT_GLOBALS.__hayatripHeiaRateLimitStore = new Map();
   }
 
-  return RATE_LIMIT_GLOBALS.__travelgeniousHeiaRateLimitStore;
+  return RATE_LIMIT_GLOBALS.__hayatripHeiaRateLimitStore;
 };
 
 const cleanupExpiredEntries = (store: HeiaRateLimitStore, now: number) => {

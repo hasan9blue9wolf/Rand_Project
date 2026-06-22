@@ -97,7 +97,7 @@ describe("requestJson", () => {
     ).resolves.toEqual({ ok: true });
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "https://api.travelgenious.app/health",
+      "https://api.hayatrip.app/health",
       expect.objectContaining({
         credentials: "omit",
         method: "GET",

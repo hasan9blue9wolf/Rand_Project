@@ -188,7 +188,7 @@ export const appendAiChatMessages = async ({
       case "assistant_response":
         return lastMessage.response.type;
       default:
-        return "Heia conversation";
+        return "Haya conversation";
     }
   })();
   const { error: threadError } = await supabase

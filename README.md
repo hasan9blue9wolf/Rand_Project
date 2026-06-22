@@ -1,6 +1,6 @@
-# TravelGenious
+# Haya Trip
 
-TravelGenious is a production-oriented Expo React Native app built with TypeScript for premium travel planning. It ships with five initial screens, English and Arabic localization, RTL support, strict TypeScript, linting, formatting, environment configuration, and a scalable feature-based structure.
+Haya Trip is a production-oriented Expo React Native app built with TypeScript for premium travel planning. It ships with five initial screens, English and Arabic localization, RTL support, strict TypeScript, linting, formatting, environment configuration, and a scalable feature-based structure.
 
 ## Launch Docs
 
@@ -15,19 +15,19 @@ TravelGenious is a production-oriented Expo React Native app built with TypeScri
 The app now defaults to an investor-demo setup intended for polished Android APK presentations:
 
 - `EXPO_PUBLIC_APP_MODE=demo` keeps the app fully interactive without requiring Supabase, a live AI backend, or real payments.
-- Heia uses premium scripted mock intelligence through the existing AI abstraction layer.
+- Haya uses premium scripted mock intelligence through the existing AI abstraction layer.
 - Auth, profile data, saved destinations, notifications metadata, checkout confirmation, and related backend-dependent flows fall back to realistic on-device demo services.
 - The live architecture is still preserved, so real providers can be re-enabled later without rewriting the screens.
 
 ## Android Investor APK
 
-TravelGenious is a true Expo React Native mobile app and is ready to produce an installable Android APK for investor demos through EAS.
+Haya Trip is a true Expo React Native mobile app and is ready to produce an installable Android APK for investor demos through EAS.
 
 The dedicated profile is `investor-apk` and is configured to:
 
 - build an `apk` instead of an `aab`
 - use `EXPO_PUBLIC_APP_MODE=demo`
-- keep Heia on polished mock intelligence
+- keep Haya on polished mock intelligence
 - avoid depending on live Supabase or payment backends
 - preserve the production app name and package identity for a premium install experience
 
@@ -72,13 +72,13 @@ npx eas-cli build:list --platform android --limit 5
 Download the APK after the build finishes:
 
 ```bash
-curl -L "<PASTE_APK_URL_FROM_EAS_OUTPUT>" -o travelgenious-investor.apk
+curl -L "<PASTE_APK_URL_FROM_EAS_OUTPUT>" -o hayatrip-investor.apk
 ```
 
 Install the APK on a connected Android phone with ADB:
 
 ```bash
-adb install -r travelgenious-investor.apk
+adb install -r hayatrip-investor.apk
 ```
 
 If you prefer manual installation, download the APK from the EAS build page, transfer it to the phone, and open it there.
@@ -108,7 +108,7 @@ Expo Router was chosen over wiring React Navigation manually for this project be
 ## Included Screens
 
 - Home
-- Heia AI Chat
+- Haya AI Chat
 - My Trips
 - Offers
 - Profile
@@ -180,7 +180,7 @@ APP_VERSION=1.0.0
 IOS_BUILD_NUMBER=1
 ANDROID_VERSION_CODE=1
 EXPO_PUBLIC_APP_MODE=demo
-EXPO_PUBLIC_API_BASE_URL=https://api.travelgenious.app
+EXPO_PUBLIC_API_BASE_URL=https://api.hayatrip.app
 EXPO_PUBLIC_EAS_UPDATE_URL=
 EXPO_PUBLIC_SUPABASE_URL=
 EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
@@ -208,14 +208,14 @@ Notes:
 
 ## Supabase Setup
 
-TravelGenious now includes a typed Supabase integration for:
+Haya Trip now includes a typed Supabase integration for:
 
 - authentication
 - user profiles
 - travel preferences
 - saved trips
 - saved destinations
-- Heia chat history
+- Haya chat history
 - notification metadata
 - offers bookmarks
 
@@ -226,14 +226,14 @@ Key files:
 - Auth bootstrap: [auth.ts](/home/bluewolf/Desktop/Rand_Project/services/supabase/auth.ts)
 - Schema proposal: [SCHEMA_PROPOSAL.md](/home/bluewolf/Desktop/Rand_Project/supabase/SCHEMA_PROPOSAL.md)
 - Full schema: [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql)
-- Migration: [20260327090000_initial_travelgenious.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_travelgenious.sql)
+- Migration: [20260327090000_initial_hayatrip.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_hayatrip.sql)
 
 Suggested setup flow:
 
 1. Create a Supabase project.
 2. Copy the project URL into `EXPO_PUBLIC_SUPABASE_URL`.
 3. Copy the publishable key into `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-4. Apply the schema with either the SQL editor using [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql) or the CLI migration in [20260327090000_initial_travelgenious.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_travelgenious.sql).
+4. Apply the schema with either the SQL editor using [schema.sql](/home/bluewolf/Desktop/Rand_Project/supabase/schema.sql) or the CLI migration in [20260327090000_initial_hayatrip.sql](/home/bluewolf/Desktop/Rand_Project/supabase/migrations/20260327090000_initial_hayatrip.sql).
 5. Enable Email auth in the Supabase dashboard.
 6. Start the app with `npm run start`.
 
@@ -247,12 +247,12 @@ supabase db push
 
 After schema changes, regenerate the database contract if needed and compare it with [database.types.ts](/home/bluewolf/Desktop/Rand_Project/services/supabase/database.types.ts).
 
-## Heia AI Backend
+## Haya AI Backend
 
-The Heia assistant uses a server-side integration for OpenAI. The mobile app never sends requests directly to OpenAI and never holds a secret API key.
+The Haya assistant uses a server-side integration for OpenAI. The mobile app never sends requests directly to OpenAI and never holds a secret API key.
 
 - Mobile app request layer: [services/api/request.ts](/home/bluewolf/Desktop/Rand_Project/services/api/request.ts)
-- Heia backend client: [heia-backend.client.ts](/home/bluewolf/Desktop/Rand_Project/features/aiAdvisor/services/heia-backend.client.ts)
+- Haya backend client: [heia-backend.client.ts](/home/bluewolf/Desktop/Rand_Project/features/aiAdvisor/services/heia-backend.client.ts)
 - Serverless route: [api/heia.ts](/home/bluewolf/Desktop/Rand_Project/api/heia.ts)
 - Rate limiting: [heia-rate-limit.ts](/home/bluewolf/Desktop/Rand_Project/api/_lib/heia-rate-limit.ts)
 
@@ -262,7 +262,7 @@ For investor demos, keep `EXPO_PUBLIC_HEIA_PROVIDER=mock` so the assistant remai
 
 ## Notifications
 
-TravelGenious now includes a local notification layer built with Expo Notifications and structured so push support can be added later without changing the screen architecture.
+Haya Trip now includes a local notification layer built with Expo Notifications and structured so push support can be added later without changing the screen architecture.
 
 Key files:
 
@@ -275,7 +275,7 @@ Key files:
 What is included now:
 
 - local trip reminders
-- Heia reminder prompts
+- Haya reminder prompts
 - saved offer alerts
 - booking milestone reminders
 - travel checklist reminders
@@ -311,15 +311,15 @@ npm run prebuild
 
 ## Testing
 
-TravelGenious now includes a Jest + React Native Testing Library setup aimed at fast demo-confidence coverage.
+Haya Trip now includes a Jest + React Native Testing Library setup aimed at fast demo-confidence coverage.
 
 Included layers:
 
 - unit tests for localization utilities
 - hook tests for language switching and Home search flow orchestration
 - shared UI component tests for primary CTA and chip interactions
-- screen tests for Home and Heia AI Chat
-- integration tests for demo auth service behavior and structured Heia response rendering
+- screen tests for Home and Haya AI Chat
+- integration tests for demo auth service behavior and structured Haya response rendering
 
 Key test files:
 
@@ -348,12 +348,12 @@ npm run test:ci
 
 - Zustand is used for local app state:
   - settings and language preference
-  - Heia chat session
+  - Haya chat session
   - last travel search
 - TanStack Query is used for async/server-style state:
   - offers
   - trips
-  - Heia prompt suggestions
+  - Haya prompt suggestions
 
 ### Forms
 
@@ -417,12 +417,12 @@ npx expo export --platform all --output-dir dist
 
 ## Performance Report
 
-- Virtualized the highest-churn surfaces with `FlatList`, including Offers, Trips, Notifications, Search Results, the home trending carousel, and the Heia chat feed.
+- Virtualized the highest-churn surfaces with `FlatList`, including Offers, Trips, Notifications, Search Results, the home trending carousel, and the Haya chat feed.
 - Reduced avoidable rerenders with `React.memo`, narrower Zustand selectors via `useShallow`, memoized derived values/handlers, and `startTransition` for chat/bootstrap updates.
 - Optimized remote images with cached sources plus safe prefetching for the home header and trending destinations.
 - Improved startup and navigation responsiveness by freezing inactive screens, deferring non-critical notification sync until after first interactions, and using placeholder query data instead of blocking initial renders.
 - Added weaker-network handling with offline-first TanStack Query defaults, cached placeholder reuse during refetches, and API retry/backoff logic for transient timeout and network failures.
-- Verified the changes with `npm run lint`, `npm run typecheck`, `npm run test`, and targeted component assertions for the Heia keyboard/virtualization behavior.
+- Verified the changes with `npm run lint`, `npm run typecheck`, `npm run test`, and targeted component assertions for the Haya keyboard/virtualization behavior.
 
 ## Notes
 

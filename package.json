@@ -1,5 +1,5 @@
 {
-  "name": "travelgenious",
+  "name": "hayatrip",
   "version": "1.0.0",
   "private": true,
   "main": "expo-router/entry",
@@ -11,6 +11,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "api:heia:dev": "node scripts/heia-dev-server.mjs",
+    "api:heia:eval": "node scripts/heia-prompt-eval.mjs",
+    "api:heia:start": "node scripts/heia-dev-server.mjs",
     "build:investor-apk": "npx eas-cli build --platform android --profile investor-apk",
     "test": "jest --runInBand",
     "test:watch": "jest --watch",

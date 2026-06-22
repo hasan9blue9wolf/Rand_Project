@@ -53,7 +53,7 @@ export const useSettingsStore = create<SettingsState>()(
         })),
     }),
     {
-      name: "travelgenious-settings",
+      name: "hayatrip-settings",
       storage: appStorage,
     },
   ),

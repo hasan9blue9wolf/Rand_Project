@@ -76,7 +76,7 @@ export const PaymentMethodScreen = () => {
 
   const total = booking.baseFare + booking.taxes + booking.serviceFee;
   const departureCode = booking.routeCode.split(" -> ")[0] ?? "";
-  const billingCity = departureCityByCode[departureCode] ?? "TravelGenious";
+  const billingCity = departureCityByCode[departureCode] ?? "Haya Trip";
 
   return (
     <ScreenContainer

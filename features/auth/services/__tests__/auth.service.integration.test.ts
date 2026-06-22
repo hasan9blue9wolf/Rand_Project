@@ -19,7 +19,7 @@ describe("auth service demo integration", () => {
     jest.useFakeTimers();
 
     const sessionPromise = signInWithEmailPassword({
-      email: "investor@travelgenious.demo",
+      email: "investor@hayatrip.demo",
       password: "secret",
     });
 
@@ -27,12 +27,12 @@ describe("auth service demo integration", () => {
 
     const session = await sessionPromise;
 
-    expect(session?.email).toBe("investor@travelgenious.demo");
+    expect(session?.email).toBe("investor@hayatrip.demo");
     expect(useAuthStore.getState().demoSession?.email).toBe(
-      "investor@travelgenious.demo",
+      "investor@hayatrip.demo",
     );
     expect(useDemoModeStore.getState().authSession?.userId).toContain(
-      "investor-travelgenious-demo",
+      "investor-hayatrip-demo",
     );
     expect(await getCurrentAuthSession()).toEqual(session);
   });
@@ -41,7 +41,7 @@ describe("auth service demo integration", () => {
     jest.useFakeTimers();
 
     const signUpPromise = signUpWithEmailPassword({
-      email: "nora@travelgenious.demo",
+      email: "nora@hayatrip.demo",
       firstName: "Nora",
       password: "secret",
     });
