@@ -5,7 +5,7 @@ Deploy repository `hasan9blue9wolf/Rand_Project` from branch `clean-render-deplo
 - Branch: `clean-render-deploy`
 - Root Directory: `server`
 - Runtime: `Node`
-- Build Command: `npm ci && npm run build`
+- Build Command: `npm ci --include=dev && npm run build`
 - Start Command: `npm start`
 - Health Check Path: `/health`
 - Instance Type: `Free`
