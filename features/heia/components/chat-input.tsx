@@ -36,6 +36,7 @@ export const ChatInput = memo(function ChatInput({
 
   return (
     <View
+      testID="haya-message-composer"
       style={{
         backgroundColor: "rgba(255,255,255,0.92)",
         borderTopColor: "rgba(223, 232, 242, 0.72)",
@@ -71,11 +72,13 @@ export const ChatInput = memo(function ChatInput({
           ]}
         >
           <TextInput
+            accessibilityLabel={t("heiaChat.promptPlaceholder")}
             multiline
             onChangeText={onChangeText}
             onFocus={onFocus}
             placeholder={t("heiaChat.promptPlaceholder")}
             placeholderTextColor={colors.text.muted}
+            scrollEnabled
             style={{
               color: colors.text.primary,
               flex: 1,
@@ -85,9 +88,11 @@ export const ChatInput = memo(function ChatInput({
               paddingHorizontal: spacing.xs,
               paddingVertical: spacing.xxs,
               textAlign: isRTL ? "right" : "left",
-              textAlignVertical: "center",
+              textAlignVertical: "top",
               writingDirection: isRTL ? "rtl" : "ltr",
             }}
+            submitBehavior="newline"
+            testID="haya-message-input"
             value={value}
           />
 

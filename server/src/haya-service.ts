@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 
 import { buildFallback } from "./fallback.js";
+import { deterministicTurn } from "./conversation-state.js";
 import { isValidRecommendation, searchFlights, searchPackages } from "./inventory.js";
 import { extractPreferences } from "./preferences.js";
 import { HAYA_SYSTEM_PROMPT, tools } from "./prompt.js";
@@ -23,7 +24,8 @@ export class HayaService {
   constructor(private readonly responses: ResponsesClient | null, private readonly model = "gpt-5.4-mini", private readonly timeoutMs = 12_000, private readonly maxOutputTokens = 700) {}
 
   async chat(request: ChatRequest): Promise<ChatResponse> {
-    if (!this.responses) return buildFallback(request);
+    const deterministic = deterministicTurn(request);
+    if (!deterministic.conversationState.readyToRecommend || !this.responses) return deterministic;
     const preferences = extractPreferences(request.message, request.preferences);
     const input = [
       ...request.history.map((item) => ({ role: item.role, content: item.content })),
@@ -40,6 +42,7 @@ export class HayaService {
         } catch { output = []; }
         return { type: "function_call_output" as const, call_id: call.call_id, output: JSON.stringify(output) };
       });
+      if (!toolOutputs.length) return deterministic;
       const final = await withRetry(() => this.responses!.parse({
         model: this.model, instructions: HAYA_SYSTEM_PROMPT,
         input: toolOutputs.length ? toolOutputs : [{ role: "user", content: "Return the structured response now. Do not recommend inventory unless a tool returned it." }],
@@ -48,12 +51,17 @@ export class HayaService {
         text: { format: zodTextFormat(chatResponseSchema, "haya_chat_response") },
       }, { signal: AbortSignal.timeout(this.timeoutMs), maxRetries: 0 }));
       const parsed = chatResponseSchema.safeParse(final.output_parsed);
-      if (!parsed.success) return buildFallback(request);
+      if (!parsed.success) return deterministic;
       const safe = parsed.data;
       safe.locale = request.locale;
       safe.updatedPreferences = extractPreferences(request.message, safe.updatedPreferences);
       safe.recommendations = safe.recommendations.filter((item) => isValidRecommendation(item.type, item.id));
-      if (parsed.data.recommendations.length > 0 && safe.recommendations.length === 0) return buildFallback({ ...request, preferences: safe.updatedPreferences });
+      if (safe.recommendations.length === 0) return deterministic;
+      safe.language = request.locale;
+      safe.followUpQuestion = null;
+      safe.followUpQuestions = [];
+      safe.needsMoreInformation = false;
+      safe.conversationState = deterministic.conversationState;
       return safe;
     } catch { return buildFallback({ ...request, preferences }); }
   }

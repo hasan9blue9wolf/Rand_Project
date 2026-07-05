@@ -1,9 +1,5 @@
-import type {
-  AiAdvisorFollowUpQuestionSetResponse,
-  AiAdvisorPlainTextGuidanceResponse,
-  AiAdvisorStructuredResponse,
-  AiAdvisorTurnRequest,
-} from "../types";
+import packageCatalog from "../../../shared/catalog/packages.json";
+import type { AiAdvisorStructuredResponse, AiAdvisorTurnRequest } from "../types";
 
 export const buildAiAdvisorSafetyResponses = ({
   locale,
@@ -53,43 +49,35 @@ export const buildAiAdvisorSafetyResponses = ({
 
 export const buildAiAdvisorFallbackResponses = ({
   locale,
-  memorySummary,
+  memorySummary: _memorySummary,
 }: {
   locale: AiAdvisorTurnRequest["locale"];
   memorySummary: string;
-}): [AiAdvisorPlainTextGuidanceResponse, AiAdvisorFollowUpQuestionSetResponse] => [
-  {
+}): AiAdvisorStructuredResponse[] => {
+  const message = locale === "ar"
+    ? "تعذر الاتصال بالمساعد حاليًا. عرضت لك بعض الخيارات المتاحة ويمكنك المحاولة مرة أخرى."
+    : locale === "fr"
+      ? "Haya est temporairement indisponible. Voici quelques options disponibles, et vous pouvez réessayer."
+      : "Haya is temporarily unavailable. Here are some available options, and you can try again.";
+  const recommendations: AiAdvisorStructuredResponse[] = packageCatalog.slice(0, 2).map((item) => {
+    const title = item.title as { ar: string; en: string; fr?: string };
+    return ({
+    ctaLabel: locale === "ar" ? "عرض الباقة" : locale === "fr" ? "Voir le forfait" : "View package",
+    durationLabel: `${item.durationDays} ${locale === "ar" ? "أيام" : locale === "fr" ? "jours" : "days"}`,
+    highlights: [item.category],
+    id: `fallback-package-${item.id}`,
+    imageUri: item.imageUrl,
+    packageId: item.id,
+    priceFrom: item.priceFrom,
+    summary: message,
+    title: title[locale] ?? title.en,
+    type: "package_recommendation" as const,
+  });
+  });
+  return [{
     id: "fallback-guidance",
-    text:
-      locale === "ar"
-        ? `صار خلل مؤقت وأنا أرتب التوصية. ${memorySummary}`
-        : `I hit a temporary snag while building the recommendation. ${memorySummary}`,
+    text: message,
     tone: "fallback",
     type: "plain_text_guidance",
-  },
-  {
-    id: "fallback-follow-up",
-    intro:
-      locale === "ar"
-        ? "أعد الإرسال أو اختار جواب سريع وأرتبلك الخيارات بشكل أوضح."
-        : "Retry the request or tap one quick answer and I’ll rebuild the shortlist more cleanly.",
-    questions: [
-      {
-        helpText:
-          locale === "ar"
-            ? "أحتاج بس إشارة أوضح حتى أكمل."
-            : "I just need one sharper signal to continue.",
-        id: "fallback-vibe",
-        question:
-          locale === "ar"
-            ? "شنو الجو اللي تريد أركز عليه؟"
-            : "Which trip mood should I focus on?",
-        quickReplies:
-          locale === "ar"
-            ? ["شاطئي", "مدينة وثقافة", "طبيعة هادئة"]
-            : ["Beach", "City and culture", "Quiet nature"],
-      },
-    ],
-    type: "follow_up_question_set",
-  },
-];
+  }, ...recommendations];
+};

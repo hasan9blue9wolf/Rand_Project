@@ -410,6 +410,7 @@ export const ar = {
     nonstop: "مباشرة",
     viewFlight: "عرض الرحلة",
     bookFlight: "حجز الرحلة",
+    viewPackage: "عرض الباقة",
     demoStatus: "تستخدم هيا ترشيحات محلية آمنة بينما الخدمة الإلكترونية غير متاحة.",
     services: {
       lounge: "دخول الصالة",
@@ -449,7 +450,7 @@ export const ar = {
     title: "هيا — مستشار السفر الذكي",
     subtitle:
       "اسأل عن الوجهات أو التوقيت أو الميزانية أو نوع الرحلة التي تريدها.",
-    promptPlaceholder: "أرسل رسالة لهيا...",
+    promptPlaceholder: "اكتب رسالتك إلى هيا...",
     disclaimer:
       "يمكن للذكاء الاصطناعي أن يرتكب أخطاء. تحقق من تفاصيل السفر قبل الحجز.",
     thinkingTitle: "هيا تبني shortlist أدق",
@@ -466,6 +467,14 @@ export const ar = {
     followUpTitle: "أسئلة لتحسين التطابق",
     estimatedBudget: "الميزانية التقديرية",
     durationLabel: "المدة",
+    flightDeparture: "المغادرة",
+    flightStops: "التوقفات",
+    flightCabin: "درجة السفر",
+    flightPrice: "السعر يبدأ من",
+    nonstop: "مباشرة",
+    viewFlight: "عرض الرحلة",
+    bookFlight: "حجز الرحلة",
+    viewPackage: "عرض الباقة",
     bestForLabel: "الأنسب لـ",
     weatherLabel: "الطقس",
     visaLabel: "الفيزا",

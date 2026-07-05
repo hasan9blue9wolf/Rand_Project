@@ -197,6 +197,7 @@ export const fr = {
     flightPrice: "Prix à partir de",
     nonstop: "Sans escale",
     viewFlight: "Voir le vol",
+    viewPackage: "Voir le forfait",
     bookFlight: "Réserver le vol",
     demoStatus: "Haya utilise des recommandations locales sécurisées pendant l’indisponibilité du service en ligne.",
   },

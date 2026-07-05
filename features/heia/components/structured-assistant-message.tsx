@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 
 import { AppCard } from "../../../components/ui/app-card";
 import { AppText } from "../../../components/ui/app-text";
@@ -12,6 +12,7 @@ import { ScalePressable } from "../../../components/ui/scale-pressable";
 import { SecondaryButton } from "../../../components/ui/secondary-button";
 import { useAppLanguage } from "../../../hooks/use-app-language";
 import { useLocalization } from "../../../hooks/use-localization";
+import { getRemoteImageSource } from "../../../services/media/remote-images";
 import { colors, radius, spacing } from "../../../theme";
 import type {
   AiAdvisorAssistantStructuredChatMessage,
@@ -19,9 +20,8 @@ import type {
   AiAdvisorPackageRecommendationResponse,
 } from "../../aiAdvisor/types";
 import { demoFlights } from "../../flights/data/flights.mock";
-import { DemoPackageCard } from "../../packages/components/demo-package-card";
 import { demoTravelPackages } from "../../packages/data/demo-travel-packages.seed";
-import { resolvePackageText } from "../../packages/helpers/package-helpers";
+import { formatPackagePrice, resolvePackageImageUrl, resolvePackageText } from "../../packages/helpers/package-helpers";
 import { usePackageFavoriteToggle } from "../../packages/hooks/use-package-favorite-toggle";
 import { RecommendationMessageCard } from "./recommendation-message-card";
 
@@ -253,39 +253,22 @@ export const StructuredAssistantMessage = memo(function StructuredAssistantMessa
     }
 
     return (
-      <View style={containerStyle}>
-        <DemoPackageCard
-          enteringIndex={messageIndex}
-          packageItem={packageItem}
-          onPress={() => onPackagePress(content.packageId)}
-        />
-        <MotionView
-          index={messageIndex + 1}
-          style={{ marginTop: spacing.sm }}
-          variant="chat"
-        >
-          <AppCard>
-            <AppText variant="title">{content.title}</AppText>
-            <AppText>{content.summary}</AppText>
-            <View
-              style={{
-                flexDirection: isRTL ? "row-reverse" : "row",
-                flexWrap: "wrap",
-                gap: spacing.xs,
-                marginTop: spacing.md,
-              }}
-            >
-              {content.highlights.map((highlight) => (
-                <MetricChip
-                  key={highlight}
-                  icon="sparkles-outline"
-                  label={highlight}
-                />
-              ))}
+      <MotionView index={messageIndex} style={containerStyle} variant="chat">
+        <AppCard elevated>
+          <View style={{ gap: spacing.md }}>
+            <Image accessibilityLabel={resolvePackageText(packageItem.title, language)} source={getRemoteImageSource(resolvePackageImageUrl(packageItem.imageUrl))} style={{ borderRadius: radius.md, height: 140, width: "100%" }} />
+            <AppText variant="title">{resolvePackageText(packageItem.title, language)}</AppText>
+            <AppText color={colors.text.secondary}>{`${resolvePackageText(packageItem.destinationCity, language)}, ${resolvePackageText(packageItem.destinationCountry, language)}`}</AppText>
+            <View style={{ flexDirection: isRTL ? "row-reverse" : "row", flexWrap: "wrap", gap: spacing.xs }}>
+              <MetricChip icon="time-outline" label={t("packagesDiscovery.meta.duration", { count: packageItem.durationDays })} />
+              <MetricChip icon="star" label={packageItem.rating.toFixed(1)} />
+              <MetricChip icon="cash-outline" label={formatPackagePrice(packageItem, language)} />
             </View>
-          </AppCard>
-        </MotionView>
-      </View>
+            <AppText color={colors.text.secondary}>{content.summary}</AppText>
+            <PrimaryButton fullWidth label={t("heiaChat.viewPackage")} onPress={() => onPackagePress(packageItem.id)} />
+          </View>
+        </AppCard>
+      </MotionView>
     );
   }
 

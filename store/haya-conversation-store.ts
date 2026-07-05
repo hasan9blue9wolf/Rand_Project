@@ -25,7 +25,7 @@ export const mergeHayaPreferences = (current: HayaTravelPreferences, updated: Ha
   })) as HayaTravelPreferences;
 
 type HayaConversationState = {
-  apiStatus: "demo" | "idle" | "loading" | "online" | "error";
+  apiStatus: "demo" | "idle" | "loading" | "online" | "error"; clarificationCount: number; recommendationsShown: boolean;
   conversationId: string; latestRecommendationIds: string[]; messages: AiAdvisorChatMessage[]; preferences: HayaTravelPreferences;
   mergePreferences: (value: HayaTravelPreferences) => void; resetConversation: () => void;
   setApiStatus: (value: HayaConversationState["apiStatus"]) => void; setMessages: (value: AiAdvisorChatMessage[]) => void;
@@ -33,15 +33,15 @@ type HayaConversationState = {
 };
 export const migrateHayaConversationState = (persisted: unknown) => {
   const value = (persisted ?? {}) as Partial<HayaConversationState>;
-  return { ...value, conversationId: typeof value.conversationId === "string" ? value.conversationId : conversationId(), latestRecommendationIds: Array.isArray(value.latestRecommendationIds) ? value.latestRecommendationIds : [], preferences: { ...emptyHayaPreferences(), ...(value.preferences ?? {}) } } as HayaConversationState;
+  return { ...value, clarificationCount: typeof value.clarificationCount === "number" ? value.clarificationCount : 0, recommendationsShown: value.recommendationsShown === true, conversationId: typeof value.conversationId === "string" ? value.conversationId : conversationId(), latestRecommendationIds: Array.isArray(value.latestRecommendationIds) ? value.latestRecommendationIds : [], messages: Array.isArray(value.messages) ? value.messages : [], preferences: { ...emptyHayaPreferences(), ...(value.preferences ?? {}) } } as HayaConversationState;
 };
 export const useHayaConversationStore = create<HayaConversationState>()(persist((set) => ({
-  apiStatus: "idle", conversationId: conversationId(), latestRecommendationIds: [], messages: [], preferences: emptyHayaPreferences(),
+  apiStatus: "idle", clarificationCount: 0, recommendationsShown: false, conversationId: conversationId(), latestRecommendationIds: [], messages: [], preferences: emptyHayaPreferences(),
   mergePreferences: (value) => set((state) => ({ preferences: mergeHayaPreferences(state.preferences, value) })),
-  resetConversation: () => set({ apiStatus: "idle", conversationId: conversationId(), latestRecommendationIds: [], messages: [], preferences: emptyHayaPreferences() }),
+  resetConversation: () => set({ apiStatus: "idle", clarificationCount: 0, recommendationsShown: false, conversationId: conversationId(), latestRecommendationIds: [], messages: [], preferences: emptyHayaPreferences() }),
   setApiStatus: (apiStatus) => set({ apiStatus }), setMessages: (messages) => set({ messages }), setRecommendationIds: (latestRecommendationIds) => set({ latestRecommendationIds }),
 }), {
-  name: "hayatrips-haya-conversation", version: 1, storage: appStorage,
-  partialize: (state) => ({ conversationId: state.conversationId, latestRecommendationIds: state.latestRecommendationIds, preferences: state.preferences }),
+  name: "hayatrips-haya-conversation", version: 2, storage: appStorage,
+  partialize: (state) => ({ clarificationCount: state.clarificationCount, recommendationsShown: state.recommendationsShown, conversationId: state.conversationId, latestRecommendationIds: state.latestRecommendationIds, messages: state.messages, preferences: state.preferences }),
   migrate: migrateHayaConversationState,
 }));

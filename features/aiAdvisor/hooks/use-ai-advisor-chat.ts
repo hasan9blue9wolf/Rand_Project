@@ -55,8 +55,16 @@ const resolveTurnLocale = (input: string, fallbackLocale: AppLocale) =>
 
 const mapResponsesToChatMessages = (
   responses: AiAdvisorStructuredResponse[],
-) =>
-  responses.map((response, index) =>
+  language: AppLocale,
+) => {
+  const recommendations: { id: string; type: "package" | "flight" }[] = [];
+  for (const response of responses) {
+    if (response.type === "package_recommendation") recommendations.push({ id: response.packageId, type: "package" });
+    if (response.type === "flight_recommendation") recommendations.push({ id: response.flightId, type: "flight" });
+  }
+  const conversation = useHayaConversationStore.getState();
+  const metadata = { language, recommendationIds: recommendations.map((item) => item.id), recommendationTypes: recommendations.map((item) => item.type), conversationState: { clarificationCount: conversation.clarificationCount, readyToRecommend: recommendations.length > 0 } };
+  return responses.map((response, index) =>
     response.type === "plain_text_guidance"
       ? {
           id: `assistant-text-${response.id}`,
@@ -64,6 +72,7 @@ const mapResponsesToChatMessages = (
           role: "assistant",
           showAvatar: index === 0,
           text: response.text,
+          ...metadata,
           ...(response.tone ? { tone: response.tone } : {}),
         }
       : {
@@ -72,8 +81,10 @@ const mapResponsesToChatMessages = (
           kind: "assistant_response",
           response: response as AiAdvisorRenderableStructuredResponse,
           role: "assistant",
+          ...metadata,
         },
   ) satisfies AiAdvisorChatMessage[];
+};
 
 export const useAiAdvisorChat = () => {
   const { language, t } = useLocalization();
@@ -184,7 +195,6 @@ export const useAiAdvisorChat = () => {
     lastUserMessageRef.current = trimmed;
     messagesRef.current = [...workingHistory, loadingMessage];
     startTransition(() => {
-      setDraft("");
       setIsLoading(true);
       setMessages(messagesRef.current);
     });
@@ -198,6 +208,7 @@ export const useAiAdvisorChat = () => {
       });
       const assistantMessages = mapResponsesToChatMessages(
         turnResult.responses,
+        turnLocale,
       );
       const nextMessages = [...workingHistory, ...assistantMessages];
       const messagesToPersist = [
@@ -208,6 +219,7 @@ export const useAiAdvisorChat = () => {
       memoryRef.current = turnResult.memory;
       messagesRef.current = nextMessages;
       startTransition(() => {
+        setDraft("");
         setMessages(nextMessages);
       });
       void persistMessages({

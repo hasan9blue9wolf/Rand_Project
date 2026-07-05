@@ -226,6 +226,10 @@ export type AiAdvisorAssistantTextChatMessage = {
   suggestionIds?: AiAdvisorSuggestionId[];
   text: string;
   tone?: AiAdvisorGuidanceTone;
+  language?: AppLocale;
+  recommendationIds?: string[];
+  recommendationTypes?: ("package" | "flight")[];
+  conversationState?: { clarificationCount: number; readyToRecommend: boolean; assumptions?: string[] };
 };
 
 export type AiAdvisorUserTextChatMessage = {
@@ -246,6 +250,10 @@ export type AiAdvisorAssistantStructuredChatMessage = {
   kind: "assistant_response";
   response: AiAdvisorRenderableStructuredResponse;
   role: "assistant";
+  language?: AppLocale;
+  recommendationIds?: string[];
+  recommendationTypes?: ("package" | "flight")[];
+  conversationState?: { clarificationCount: number; readyToRecommend: boolean; assumptions?: string[] };
 };
 
 export type AiAdvisorStatusState = "error" | "loading";

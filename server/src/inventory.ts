@@ -70,3 +70,32 @@ export function searchFlights(input: FlightSearch, catalog = flightCatalog) {
 
 export const isValidRecommendation = (type: "package" | "flight", id: string) =>
   type === "package" ? packageCatalog.some((item) => item.id === id) : flightCatalog.some((item) => item.id === id);
+
+export function rankPackages(input: PackageSearch, limit = 4) {
+  const tags = input.tags?.map(norm) ?? [];
+  return packageCatalog.map((item) => {
+    let score = 50;
+    if (input.destinationCity && localizedMatch(item.destinationCity, input.destinationCity)) score += 30;
+    if (input.tripType && (norm(item.tripType).includes(norm(input.tripType)) || item.tags.map(norm).some((tag) => tag.includes(norm(input.tripType!))))) score += 25;
+    if (input.budgetMax != null) score += item.priceFrom <= input.budgetMax ? 20 : Math.max(-20, 10 - ((item.priceFrom - input.budgetMax) / Math.max(input.budgetMax, 1)) * 40);
+    if (input.travelers != null) score += item.maxTravelers >= input.travelers ? 8 : -30;
+    if (input.durationDays != null) score += Math.max(-8, 10 - Math.abs(item.durationDays - input.durationDays) * 3);
+    if (input.departureCity) score += item.departureCities.some((city) => norm(city) === norm(input.departureCity!)) ? 8 : -4;
+    if (tags.length && tags.some((tag) => item.tags.map(norm).some((candidate) => candidate.includes(tag)))) score += 10;
+    return { item, score: Math.max(0, Math.min(100, Math.round(score))) };
+  }).filter(({ item }) => input.travelers == null || item.maxTravelers >= input.travelers)
+    .sort((a, b) => b.score - a.score || b.item.rating - a.item.rating || a.item.priceFrom - b.item.priceFrom)
+    .slice(0, limit);
+}
+
+export function rankFlights(input: FlightSearch, limit = 3) {
+  return flightCatalog.map((item) => {
+    let score = 40;
+    if (input.fromCity) score += norm(item.fromCity) === norm(input.fromCity) ? 25 : -30;
+    if (input.toCity) score += norm(item.toCity) === norm(input.toCity) ? 25 : -30;
+    if (input.budgetMax != null) score += item.priceFrom <= input.budgetMax ? 12 : -10;
+    if (input.departureDate) score += item.departureDate === input.departureDate ? 10 : -3;
+    if (input.cabinClass) score += norm(item.cabin) === norm(input.cabinClass) ? 8 : -4;
+    return { item, score: Math.max(0, Math.min(100, score)) };
+  }).filter(({ score }) => score >= 35).sort((a, b) => b.score - a.score || a.item.priceFrom - b.item.priceFrom).slice(0, limit);
+}

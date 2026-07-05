@@ -54,7 +54,14 @@ const responseSchema = z.object({
     type: z.enum(["package", "flight"]), id: z.string(), reason: z.string(), matchScore: z.number(),
   })),
   requestId: z.string().optional(),
+  conversationState: z.object({ language: z.enum(["en", "ar", "fr"]), clarificationCount: z.number(), collectedAnswerCount: z.number(), readyToRecommend: z.boolean(), collectedPreferences: preferencesSchema, assumptions: z.array(z.string()), recommendationsShown: z.boolean() }).optional(),
+  followUpQuestion: z.string().nullable().optional(),
 });
+
+export type HayaRecommendation =
+  | { type: "package"; id: string; reason?: string }
+  | { type: "flight"; id: string; reason?: string };
+export type HayaChatResponse = z.infer<typeof responseSchema>;
 
 const localized = (value: { ar: string; en: string; fr?: string }, locale: "en" | "ar" | "fr") =>
   value[locale] ?? value.en;
@@ -72,10 +79,14 @@ export const mapHayaResponseToChatResponses = (
     if (recommendation.type === "flight") {
       const flight = flightCatalog.find((candidate) => candidate.id === recommendation.id);
       if (flight) responses.push({ flightId: flight.id, id: `haya-flight-${flight.id}`, reason: recommendation.reason, type: "flight_recommendation" });
+      else if (__DEV__) console.warn(`[Haya] Ignored missing flight inventory ID: ${recommendation.id}`);
       continue;
     }
     const item = packageCatalog.find((candidate) => candidate.id === recommendation.id);
-    if (!item) continue;
+    if (!item) {
+      if (__DEV__) console.warn(`[Haya] Ignored missing package inventory ID: ${recommendation.id}`);
+      continue;
+    }
     responses.push({
       ctaLabel: data.locale === "ar" ? "عرض الباقة" : data.locale === "fr" ? "Voir le forfait" : "View package",
       durationLabel: `${item.durationDays} ${data.locale === "ar" ? "أيام" : data.locale === "fr" ? "jours" : "days"}`,
@@ -127,6 +138,7 @@ export const requestHeiaBackend = async ({ body, language }: { body: AiAdvisorBa
         conversationId: conversation.conversationId,
         history: (body.history ?? []).filter((item) => item.kind === "user_text" || item.kind === "assistant_text").slice(-12).map((item) => ({ role: item.role, content: "text" in item ? item.text : "" })).filter((item) => item.content),
         preferences: requestPreferences,
+        conversationState: { clarificationCount: conversation.clarificationCount, recommendationsShown: conversation.recommendationsShown },
       },
       headers: { "Accept-Language": language },
       path: HEIA_API_PATH,
@@ -138,6 +150,7 @@ export const requestHeiaBackend = async ({ body, language }: { body: AiAdvisorBa
     const nextStore = useHayaConversationStore.getState();
     nextStore.mergePreferences(response.updatedPreferences);
     nextStore.setRecommendationIds(response.recommendations.map((item) => item.id));
+    if (response.conversationState) useHayaConversationStore.setState({ clarificationCount: response.conversationState.clarificationCount, recommendationsShown: response.conversationState.recommendationsShown });
     nextStore.setApiStatus("online");
     return { ok: true, providerName: "hayatrips-haya-backend", ...(response.requestId ? { requestId: response.requestId } : {}), responses: mapHayaResponseToChatResponses(response), templateId: body.templateId };
   } catch (error) {

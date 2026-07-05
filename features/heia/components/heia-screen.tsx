@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useEffectEvent, useRef } from "react";
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import {
   FlatList,
   Keyboard,
@@ -53,6 +53,7 @@ export const HeiaScreen = () => {
   } = useAiAdvisorChat();
   const scrollRef = useRef<FlatList<AiAdvisorChatMessage>>(null);
   const hasMountedRef = useRef(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const packageContextAppliedRef = useRef<string | undefined>(undefined);
   const { width } = useWindowDimensions();
   const { isRTL, t } = useLocalization();
@@ -93,13 +94,18 @@ export const HeiaScreen = () => {
   }, [params.packageContext, params.packageId, sendText]);
 
   useEffect(() => {
-    const eventName =
-      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
-    const subscription = Keyboard.addListener(eventName, () =>
-      scrollToBottom(true),
-    );
+    const showEvent = Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent = Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+    const showSubscription = Keyboard.addListener(showEvent, () => {
+      setKeyboardVisible(true);
+      scrollToBottom(true);
+    });
+    const hideSubscription = Keyboard.addListener(hideEvent, () => setKeyboardVisible(false));
 
-    return () => subscription.remove();
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
   }, [scrollToBottom]);
 
   const handlePackagePress = useCallback(
@@ -184,6 +190,7 @@ export const HeiaScreen = () => {
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
+        enabled={Platform.OS === "ios"}
         keyboardVerticalOffset={Platform.OS === "ios" ? insets.top : 0}
         style={{ backgroundColor: CHAT_BACKGROUND, flex: 1 }}
       >
@@ -221,7 +228,6 @@ export const HeiaScreen = () => {
               Platform.OS === "ios" ? "interactive" : "none"
             }
             maxToRenderPerBatch={6}
-            onContentSizeChange={() => scrollToBottom(hasMountedRef.current)}
             onLayout={() => scrollToBottom(false)}
             ref={scrollRef}
             removeClippedSubviews={Platform.OS === "android"}
@@ -247,7 +253,7 @@ export const HeiaScreen = () => {
             </AppText>
           ) : null}
           <ChatInput
-            bottomInset={insets.bottom}
+            bottomInset={keyboardVisible ? 0 : insets.bottom}
             disabled={draft.trim().length === 0}
             loading={isLoading}
             onChangeText={setDraft}

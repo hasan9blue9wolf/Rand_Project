@@ -50,9 +50,13 @@ describe("resilience", () => {
     expect((await new HayaService(client).chat(request("Hello"))).intent).toBe("collect_preferences");
   });
   it("removes invalid recommendation IDs", async () => {
-    const output = { assistantMessage: "Choice", locale: "en", intent: "recommend_packages", updatedPreferences: preferences, needsMoreInformation: false, followUpQuestions: [], recommendations: [{ type: "package", id: "invented", reason: "x", matchScore: 90 }] };
-    const client = { create: vi.fn().mockResolvedValue({ id: "r1", output: [] }), parse: vi.fn().mockResolvedValue({ output_parsed: output }) } as any;
-    expect((await new HayaService(client).chat(request("Hello"))).recommendations).toEqual([]);
+    const ready = request("From Baghdad, beach holiday, 2 travelers, budget 2500 USD for 7 days");
+    const baseline = await new HayaService(null).chat(ready);
+    const output = { ...baseline, recommendations: [{ type: "package", id: "invented", reason: "x", matchScore: 90 }] };
+    const client = { create: vi.fn().mockResolvedValue({ id: "r1", output: [{ type: "function_call", name: "search_packages", arguments: "{}", call_id: "c1" }] }), parse: vi.fn().mockResolvedValue({ output_parsed: output }) } as any;
+    const result = await new HayaService(client).chat(ready);
+    expect(result.recommendations.some((item) => item.id === "invented")).toBe(false);
+    expect(result.recommendations.length).toBeGreaterThan(0);
   });
   it("rate limits requests", () => {
     const limiter = new RateLimiter(1, 60_000);
@@ -73,6 +77,63 @@ describe("resilience", () => {
     expect(await limited.json()).toMatchObject({ error: "Too many requests" });
     server.close();
     await once(server, "close");
+  });
+});
+
+describe("deterministic recommendation state machine", () => {
+  it("returns immediate recommendations for complete Arabic requirements", async () => {
+    const result = await new HayaService(null).chat(request("أريد رحلة لشخصين من بغداد إلى مكان هادئ بميزانية 2000 دولار لمدة أسبوع.", "ar"));
+    expect(result.language).toBe("ar");
+    expect(result.followUpQuestion).toBeNull();
+    expect(result.recommendations.length).toBeGreaterThanOrEqual(2);
+    expect(result.recommendations.every((item) => item.type === "package" ? packageCatalog.some((p) => p.id === item.id) : flightCatalog.some((f) => f.id === item.id))).toBe(true);
+  });
+
+  it("asks three focused English questions then recommends", async () => {
+    const service = new HayaService(null);
+    let result = await service.chat(request("I want a holiday."));
+    expect(result.followUpQuestions).toHaveLength(1);
+    result = await service.chat({ ...request("A beach holiday."), preferences: result.updatedPreferences, conversationState: { clarificationCount: result.conversationState.clarificationCount, recommendationsShown: false } });
+    expect(result.followUpQuestions).toHaveLength(1);
+    result = await service.chat({ ...request("Budget 2000 USD."), preferences: result.updatedPreferences, conversationState: { clarificationCount: result.conversationState.clarificationCount, recommendationsShown: false } });
+    expect(result.conversationState.clarificationCount).toBe(3);
+    result = await service.chat({ ...request("2 travelers."), preferences: result.updatedPreferences, conversationState: { clarificationCount: 3, recommendationsShown: false } });
+    expect(result.followUpQuestion).toBeNull();
+    expect(result.recommendations.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("never asks a fifth question", async () => {
+    const result = await new HayaService(null).chat({ ...request("Anything is fine"), conversationState: { clarificationCount: 4, recommendationsShown: false } });
+    expect(result.needsMoreInformation).toBe(false);
+    expect(result.followUpQuestion).toBeNull();
+    expect(result.recommendations.length).toBeGreaterThan(0);
+  });
+
+  it("replies in French with valid recommendations", async () => {
+    const result = await new HayaService(null).chat(request("Je cherche un voyage à la plage pour deux personnes, budget de 1800 USD pour 7 jours.", "fr"));
+    expect(result.language).toBe("fr");
+    expect(result.assistantMessage).toMatch(/Voici|options|alternatives/i);
+    expect(result.recommendations.every((item) => isFinite(item.matchScore) && packageCatalog.some((p) => p.id === item.id))).toBe(true);
+  });
+
+  it("does not re-ask preferences supplied by the client", async () => {
+    const supplied = preferencesSchema.parse({ destinationInterests: ["Bali"], budgetMax: 2500, travelers: 2, durationDays: 7 });
+    const result = await new HayaService(null).chat({ ...request("Show me options"), preferences: supplied });
+    expect(result.followUpQuestion).toBeNull();
+    expect(result.recommendations.length).toBeGreaterThan(0);
+  });
+
+  it("returns nearest alternatives when exact filters do not match", async () => {
+    const result = await new HayaService(null).chat(request("From Baghdad to Atlantis, 2 travelers, budget 10 USD for 30 days"));
+    expect(result.recommendations.length).toBeGreaterThan(0);
+    expect(result.recommendations.every((item) => item.id !== "Atlantis")).toBe(true);
+  });
+
+  it("falls back to deterministic search when OpenAI makes no tool call", async () => {
+    const client = { create: vi.fn().mockResolvedValue({ id: "r1", output: [] }), parse: vi.fn() } as any;
+    const result = await new HayaService(client).chat(request("Beach holiday, 2 travelers, budget 2000 USD for 7 days"));
+    expect(client.parse).not.toHaveBeenCalled();
+    expect(result.recommendations.length).toBeGreaterThan(0);
   });
 });
 

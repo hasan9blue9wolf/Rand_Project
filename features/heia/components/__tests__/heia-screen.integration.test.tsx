@@ -9,6 +9,8 @@ import { fireEvent, screen, waitFor } from "@testing-library/react-native";
 import { router } from "expo-router";
 
 import { appRoutes } from "../../../../navigation/routes";
+import i18n from "../../../../services/i18n";
+import { useSettingsStore } from "../../../../store/settings-store";
 import { renderWithProviders } from "../../../../test/utils/render-with-providers";
 import type { AiAdvisorTurnResult } from "../../../aiAdvisor/types";
 import { HeiaScreen } from "../heia-screen";
@@ -185,5 +187,17 @@ describe("HeiaScreen AI integration", () => {
     });
 
     expect(screen.queryByText("Questions to sharpen the fit")).toBeNull();
+  });
+
+  it("keeps the draft visible when sending fails", async () => {
+    await i18n.changeLanguage("en");
+    useSettingsStore.setState({ language: "en" });
+    mockRequestAiAdvisorTurn.mockRejectedValueOnce(new Error("offline"));
+    renderWithProviders(<HeiaScreen />);
+    const input = screen.getByTestId("haya-message-input");
+    fireEvent.changeText(input, "Keep this message visible");
+    fireEvent.press(screen.getByLabelText("Send message"));
+    await waitFor(() => expect(mockRequestAiAdvisorTurn).toHaveBeenCalled());
+    expect(screen.getByTestId("haya-message-input").props.value).toBe("Keep this message visible");
   });
 });

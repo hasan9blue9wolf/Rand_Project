@@ -27,6 +27,7 @@ export default function TabsLayout() {
         lazy: true,
         tabBarActiveTintColor: colors.primary[500],
         tabBarInactiveTintColor: colors.text.muted,
+        tabBarHideOnKeyboard: true,
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: "600",
