@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2064" height="2752" viewBox="0 0 2064 2752" fill="none">
+  <rect width="2064" height="2752" fill="#071528"/>
+  <rect x="120" y="120" width="1824" height="2512" rx="96" fill="#0E2038" stroke="#2F8FFF" stroke-width="8"/>
+  <path d="M640 1440L1032 760L1424 1440" stroke="#2F8FFF" stroke-width="190" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M724 1420L1032 886L1340 1420" stroke="#C9E4FF" stroke-width="110" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1032" y="338" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="84" font-weight="700" text-anchor="middle">Replace With Final iPad Screenshot</text>
+  <text x="1032" y="432" fill="#9FCBFF" font-family="Arial, sans-serif" font-size="42" text-anchor="middle">2064 x 2752 • Apple 13-inch portrait canvas</text>
+  <rect x="312" y="1808" width="1440" height="540" rx="44" fill="#112844" stroke="#244E85" stroke-width="4" stroke-dasharray="18 18"/>
+  <text x="1032" y="2024" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="56" font-weight="700" text-anchor="middle">Tablet experience</text>
+  <text x="1032" y="2114" fill="#C9E4FF" font-family="Arial, sans-serif" font-size="36" text-anchor="middle">Show layouts that clearly justify iPad support and large-screen polish.</text>
+</svg>

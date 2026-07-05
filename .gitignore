@@ -1,0 +1,56 @@
+# Expo
+.expo/
+.expo-shared/
+.expo-seed/
+expo-env.d.ts
+
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Build outputs
+dist/
+server/dist/
+web-build/
+build/
+builds/
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Gradle caches and Android build outputs
+.gradle/
+.gradle-local/
+android/.gradle/
+android/app/build/
+
+# Native generated folders
+android/
+ios/
+
+# Environment variables and secrets
+.env
+.env.*
+server/.env
+server/.env.*
+
+# Keep environment examples
+!.env.example
+!.env.production.example
+!.env.staging.example
+!server/.env.example
+
+# Tests
+coverage/
+server/coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and editor files
+.DS_Store
+*.swp

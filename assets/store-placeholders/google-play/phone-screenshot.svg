@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" fill="none">
+  <rect width="1080" height="1920" fill="#071528"/>
+  <rect x="72" y="72" width="936" height="1776" rx="72" fill="#0E2038" stroke="#2F8FFF" stroke-width="6"/>
+  <path d="M330 980L540 600L750 980" stroke="#2F8FFF" stroke-width="122" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M374 970L540 670L706 970" stroke="#C9E4FF" stroke-width="70" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="540" y="248" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle">Google Play Phone Screenshot</text>
+  <text x="540" y="320" fill="#9FCBFF" font-family="Arial, sans-serif" font-size="26" text-anchor="middle">1080 x 1920 • 9:16 portrait placeholder</text>
+  <rect x="148" y="1228" width="784" height="360" rx="28" fill="#112844" stroke="#244E85" stroke-width="4" stroke-dasharray="16 16"/>
+  <text x="540" y="1396" fill="#F7FBFF" font-family="Arial, sans-serif" font-size="40" font-weight="700" text-anchor="middle">Use real UI capture</text>
+  <text x="540" y="1458" fill="#C9E4FF" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">Prioritize the product UI in the first screenshots.</text>
+</svg>

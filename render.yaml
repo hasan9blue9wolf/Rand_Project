@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: haya-trips-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_MODEL
+        value: gpt-5.4-mini
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: RATE_LIMIT_MAX
+        value: "30"
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "60000"
+      - key: MAX_OUTPUT_TOKENS
+        value: "700"
